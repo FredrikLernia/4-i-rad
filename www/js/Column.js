@@ -16,10 +16,11 @@ class Column extends Component {
       new Slot(this.columnId, 1),
     ];
     this.bricksInsideMe = 0;
+    this.slotIndex = 5;
   }
 
   clickOnMe() {
-    this.gamePage.addBrickInColumn(this);
+    this.gamePage.addBrickInSlot(this);
   }
 
 }

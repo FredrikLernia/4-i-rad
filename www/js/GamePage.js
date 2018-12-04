@@ -19,17 +19,19 @@ class GamePage extends Component {
     this.turn = 0;
   }
 
-  addBrickInColumn(column) {
+  addBrickInSlot(column) {
     let playerTurn = this.checkWhosTurn();
-    if (this.checkWhereToPlaceBrick(column)) {
+    if (this.checkIfColumnIsFull(column)) {
       column.bricksInsideMe++;
-      let id = '#' + column.columnId + '-' + column.bricksInsideMe;
-      this.baseEl.find(id).css({'background-color': playerTurn.color});
+      let slot = column.slots[column.slotIndex];
+      slot.brickInside.push(new Brick(playerTurn.color));
       this.changePlayer();
+      this.render();
+      column.slotIndex--;
     }
   }
 
-  checkWhereToPlaceBrick(column) {
+  checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return true; }
     return alert('This column is full');
   }
