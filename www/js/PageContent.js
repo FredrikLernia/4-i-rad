@@ -3,7 +3,8 @@ class PageContent extends Component {
   constructor(){
     super();
     this.startPage = new StartPage();
-
+    this.gamePage = new GamePage();
+    this.rulesPage = new RulesPage();
     this.missingPage = new MissingPage();
     this.loadLocalDB(); //Plug this puppy in when we are ready to do so (routing data to startpage for now)
   }
