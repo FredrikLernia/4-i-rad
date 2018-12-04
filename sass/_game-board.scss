@@ -1,0 +1,20 @@
+.game-board {
+  width: 80%;
+  background-color: blue;
+
+  .game-board-column {
+    display: inline-block;
+    width: calc(100% / 7);
+    &:hover {
+      background-color: rgb(82, 82, 255);
+    }
+
+    .game-board-slot {
+      width: 100%;
+      height: calc(60vw / 6);
+      background-color: #fff;
+      border-radius: 50%;
+      text-align: center;
+    }
+  }
+}
