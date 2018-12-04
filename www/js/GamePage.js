@@ -2,7 +2,7 @@ class GamePage extends Component {
 
   constructor() {
     super();
-    this.addRoute('/game', 'Game');
+    this.addRoute('/spela', 'Spela');
     this.columns = [
       new Column(1),
       new Column(2),
@@ -13,5 +13,5 @@ class GamePage extends Component {
       new Column(7),
     ];
   }
-  
+
 }
