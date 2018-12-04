@@ -1,11 +1,11 @@
 class Player {
 
-  constructor(name, color, movesMade, isYourTurn){
+  constructor(name, color){
 
     this.name = name;
     this.color = color;
-    this.movesMade = movesMade;
-    this.isYourTurn = isYourTurn;
+    this.movesMade = 0;
+    this.isYourTurn = false;
   }
 
   isItYourTurn(isYourTurn){
