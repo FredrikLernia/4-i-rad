@@ -1,17 +1,17 @@
-class Bot extends Player {
+class Bot extends Player{
 
-  constructor() {
+  constructor(){
 
     super();
   }
 
-  makeRandomizedMove() {
+  makeRandomizedMove(){
 
 
   }
 
-  makeCalculatedMove() {
+  makeCalculatedMove(){
 
-
+    
   }
 }
