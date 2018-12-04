@@ -4,14 +4,27 @@ class GamePage extends Component {
     super();
     this.addRoute('/spela', 'Spela');
     this.columns = [
-      new Column(1),
-      new Column(2),
-      new Column(3),
-      new Column(4),
-      new Column(5),
-      new Column(6),
-      new Column(7),
+      new Column(1, this),
+      new Column(2, this),
+      new Column(3, this),
+      new Column(4, this),
+      new Column(5, this),
+      new Column(6, this),
+      new Column(7, this),
     ];
+  }
+
+  addBrickInColumn(column) {
+    if (this.checkWhereToPlaceBrick(column)) {
+      column.bricksInsideMe++;
+      let id = '#' + column.columnId + '-' + column.bricksInsideMe;
+      this.baseEl.find(id).css({'background-color': 'yellow'});
+    }
+  }
+
+  checkWhereToPlaceBrick(column) {
+    if (column.bricksInsideMe < 6) { return true; }
+    return alert('This column is full');
   }
 
 }
