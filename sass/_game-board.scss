@@ -26,11 +26,9 @@
       border-radius: 50%;
 
       .brick {
-        display: inline-block;
         width: 100%;
         // change height value to make perfect circle
         height: calc(60vw / 6);
-        background-color: yellow;
         border-radius: 50%;
       }
     }

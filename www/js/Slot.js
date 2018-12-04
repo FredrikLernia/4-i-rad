@@ -4,6 +4,7 @@ class Slot extends Component {
     super();
     this.columnId = columnId;
     this.slotId = slotId;
+    this.brickInside = [];
   }
 
 }
