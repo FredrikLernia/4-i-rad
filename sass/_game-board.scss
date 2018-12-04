@@ -3,18 +3,36 @@
   background-color: blue;
 
   .game-board-column {
+    position: relative;
     display: inline-block;
     width: calc(100% / 7);
     &:hover {
       background-color: rgb(82, 82, 255);
     }
 
+    .hidden-div-for-click {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
     .game-board-slot {
       width: 100%;
+      // change height value to make perfect circle
       height: calc(60vw / 6);
       background-color: #fff;
       border-radius: 50%;
-      text-align: center;
+
+      .brick {
+        display: inline-block;
+        width: 100%;
+        // change height value to make perfect circle
+        height: calc(60vw / 6);
+        background-color: yellow;
+        border-radius: 50%;
+      }
     }
   }
 }
