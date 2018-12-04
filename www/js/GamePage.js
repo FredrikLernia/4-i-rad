@@ -3,6 +3,8 @@ class GamePage extends Component {
   constructor() {
     super();
     this.addRoute('/spela', 'Spela');
+    this.addEvents({'click .restart':'restartGame'
+  });
     this.columns = [
       new Column(1, this),
       new Column(2, this),
@@ -12,6 +14,9 @@ class GamePage extends Component {
       new Column(6, this),
       new Column(7, this),
     ];
+  }
+  restartGame(){
+
   }
 
   addBrickInColumn(column) {
