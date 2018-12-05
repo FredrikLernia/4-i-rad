@@ -7,16 +7,16 @@ class Column extends Component {
     });
     this.columnId = columnId;
     this.gamePage = gamePage;
-    this.slots = [
-      new Slot(this.columnId, 6),
-      new Slot(this.columnId, 5),
-      new Slot(this.columnId, 4),
-      new Slot(this.columnId, 3),
-      new Slot(this.columnId, 2),
-      new Slot(this.columnId, 1),
-    ];
+    this.slots = [];
+    this.createSlots();
     this.bricksInsideMe = 0;
     this.slotIndex = 5;
+  }
+
+  createSlots() {
+    for (let i = 6; i >=1; i--) {
+      this.slots.push(new Slot(this.columnId, i));
+    }
   }
 
   clickOnMe() {
