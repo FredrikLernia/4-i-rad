@@ -61,7 +61,7 @@ class GamePage extends Component {
         }
 
         if (winCounter === 4) {
-          alert("you win");
+          alert(color + " wins");
           break;
         }
       }
@@ -84,7 +84,7 @@ class GamePage extends Component {
         }
 
         if (winCounter === 4) {
-          alert("you win");
+          alert(color + " you wins");
           break;
         }
       }
