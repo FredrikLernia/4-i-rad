@@ -14,22 +14,40 @@ class GamePage extends Component {
       new Column(6, this),
       new Column(7, this),
     ];
+    this.players = [
+      new Player('Fredrik', 'yellow'),
+      new Bot('Trump', 'red')
+    ];
+    this.turn = 0;
   }
   restartGame(){
 
   }
 
-  addBrickInColumn(column) {
-    if (this.checkWhereToPlaceBrick(column)) {
+  addBrickInSlot(column) {
+    let playerTurn = this.checkWhosTurn();
+    if (this.checkIfColumnIsFull(column)) {
       column.bricksInsideMe++;
-      let id = '#' + column.columnId + '-' + column.bricksInsideMe;
-      this.baseEl.find(id).css({'background-color': 'yellow'});
+      let slot = column.slots[column.slotIndex];
+      slot.brickInside.push(new Brick(playerTurn.color));
+      this.changePlayer();
+      this.render();
+      column.slotIndex--;
     }
   }
 
-  checkWhereToPlaceBrick(column) {
+  checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return true; }
     return alert('This column is full');
+  }
+
+  checkWhosTurn() {
+    return this.players[this.turn];
+  }
+
+  changePlayer() {
+    if (this.turn === 0) { this.turn++; }
+    else { this.turn--; }
   }
 
 }

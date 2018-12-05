@@ -1,8 +1,8 @@
 class HumanPlayer extends Player{
 
-  constructor(){
+  constructor(name, color){
 
-    super();
+    super(name, color);
   }
 
   makeMove(){
