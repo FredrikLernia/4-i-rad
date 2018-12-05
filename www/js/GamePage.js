@@ -36,16 +36,46 @@ class GamePage extends Component {
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
       this.makeRandomMove(playerTurn);
+      this.winChecker();
     }
   }
+
+  winChecker() {
+
+    let winCounter = 0;
+    for (let j = 0; j < 7; j++) {
+      winCounter = 0;
+      for (let i = 5; i >= 0; i--) {
+        if(this.columns[j].slots[i].brickInside[0] !== undefined){
+        if (this.columns[j].slots[i].brickInside[0].color === "yellow") {
+
+          winCounter++;
+        }
+      }
+        if(this.columns[j].slots[i].brickInside[0] !== undefined){
+        if (this.columns[j].slots[i].brickInside[0].color === "red") {
+
+          winCounter = 0;
+        }
+      }
+
+        if (winCounter === 4) {
+          alert("you win");
+          break;
+        }
+      }
+    }
+  }
+
 
   makeRandomMove(playerTurn) {
     let randCol;
     let validMoveChecker = false;
     while (validMoveChecker === false) {
       randCol = this.players[1].makeRandomizedMove();
-      if (this.botCheckIfColumnIsFull(this.columns[randCol]) === true)
+      if (this.botCheckIfColumnIsFull(this.columns[randCol]) === true) {
         validMoveChecker = true;
+      }
     }
 
     this.columns[randCol].bricksInsideMe++;
