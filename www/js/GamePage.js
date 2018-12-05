@@ -3,8 +3,9 @@ class GamePage extends Component {
   constructor() {
     super();
     this.addRoute('/spela', 'Spela');
-    this.addEvents({'click .restart':'restartGame'
-  });
+    this.addEvents({
+      'click .restart': 'restartGame'
+    });
     this.columns = [
       new Column(1, this),
       new Column(2, this),
@@ -20,7 +21,7 @@ class GamePage extends Component {
     ];
     this.turn = 0;
   }
-  restartGame(){
+  restartGame() {
 
   }
 
@@ -38,14 +39,14 @@ class GamePage extends Component {
     }
   }
 
-  makeRandomMove(playerTurn){
-  let randCol;
-  let validMoveChecker = false; 
-  while(validMoveChecker === false){
-  randCol = this.players[1].makeRandomizedMove();
-  if(this.botCheckIfColumnIsFull(this.columns[randCol]) === true)
-  validMoveChecker = true;
-  }
+  makeRandomMove(playerTurn) {
+    let randCol;
+    let validMoveChecker = false;
+    while (validMoveChecker === false) {
+      randCol = this.players[1].makeRandomizedMove();
+      if (this.botCheckIfColumnIsFull(this.columns[randCol]) === true)
+        validMoveChecker = true;
+    }
 
     this.columns[randCol].bricksInsideMe++;
     let slot = this.columns[randCol].slots[this.columns[randCol].slotIndex];
@@ -58,16 +59,16 @@ class GamePage extends Component {
 
   checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return true; }
-    else{
-    alert('This column is full');
-    return false;
+    else {
+      alert('This column is full');
+      return false;
     }
   }
 
   botCheckIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return true; }
-    else{
-    return false;
+    else {
+      return false;
     }
   }
 
