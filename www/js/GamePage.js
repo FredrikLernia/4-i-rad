@@ -5,21 +5,21 @@ class GamePage extends Component {
     this.addRoute('/spela', 'Spela');
     this.addEvents({'click .restart':'restartGame'
   });
-    this.columns = [
-      new Column(1, this),
-      new Column(2, this),
-      new Column(3, this),
-      new Column(4, this),
-      new Column(5, this),
-      new Column(6, this),
-      new Column(7, this),
-    ];
+    this.columns = [];
+    this.createColumns();
     this.players = [
       new Player('Fredrik', 'yellow'),
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
   }
+
+  createColumns() {
+    for (let i = 1; i <= 7; i++) {
+      this.columns.push(new Column(i, this));
+    }
+  }
+
   restartGame(){
 
   }
