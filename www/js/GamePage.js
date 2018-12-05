@@ -15,7 +15,7 @@ class GamePage extends Component {
       new Column(7, this),
     ];
     this.players = [
-      new Player('Fredrik', 'yellow'),
+      new HumanPlayer('Fredrik', 'yellow'),
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
@@ -33,12 +33,42 @@ class GamePage extends Component {
       this.changePlayer();
       this.render();
       column.slotIndex--;
+      playerTurn = this.checkWhosTurn();
+      this.makeRandomMove(playerTurn);
     }
+  }
+
+  makeRandomMove(playerTurn){
+  let randCol;
+  let validMoveChecker = false; 
+  while(validMoveChecker === false){
+  randCol = this.players[1].makeRandomizedMove();
+  if(this.botCheckIfColumnIsFull(this.columns[randCol]) === true)
+  validMoveChecker = true;
+  }
+
+    this.columns[randCol].bricksInsideMe++;
+    let slot = this.columns[randCol].slots[this.columns[randCol].slotIndex];
+    slot.brickInside.push(new Brick(playerTurn.color));
+    this.changePlayer();
+    this.render();
+    this.columns[randCol].slotIndex--;
+    validMoveChecker = false;
   }
 
   checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return true; }
-    return alert('This column is full');
+    else{
+    alert('This column is full');
+    return false;
+    }
+  }
+
+  botCheckIfColumnIsFull(column) {
+    if (column.bricksInsideMe < 6) { return true; }
+    else{
+    return false;
+    }
   }
 
   checkWhosTurn() {
