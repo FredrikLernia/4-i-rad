@@ -4,25 +4,26 @@ class GamePage extends Component {
     super();
     this.addRoute('/spela', 'Spela');
     this.addEvents({
-      'click .restart': 'restartGame'
+      'click .restart': 'newGame'
     });
-    this.columns = [
-      new Column(1, this),
-      new Column(2, this),
-      new Column(3, this),
-      new Column(4, this),
-      new Column(5, this),
-      new Column(6, this),
-      new Column(7, this),
-    ];
+    this.newGame();
     this.players = [
       new HumanPlayer('Fredrik', 'yellow'),
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
   }
-  restartGame() {
 
+  newGame(){
+    this.columns = [];
+    this.createColumns();
+    this.render();
+  }
+
+  createColumns() {
+    for (let i = 1; i <= 7; i++) {
+      this.columns.push(new Column(i, this));
+    }
   }
 
   addBrickInSlot(column) {
