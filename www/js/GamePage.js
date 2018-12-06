@@ -14,7 +14,7 @@ class GamePage extends Component {
     this.turn = 0;
   }
 
-  newGame(){
+  newGame() {
     this.turn = 0;
     this.columns = [];
     this.createColumns();
@@ -34,15 +34,15 @@ class GamePage extends Component {
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
       this.render();
-      if(this.winChecker(playerTurn.color) === true){
+      if (this.winChecker(playerTurn.color) === true) {
         return;
       }
       this.changePlayer();
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
-      this.makeRandomMove(playerTurn);
+      // this.makeRandomMove(playerTurn);
       this.render();
-      if(this.winChecker(playerTurn.color) === true){
+      if (this.winChecker(playerTurn.color) === true) {
         return;
       }
     }
@@ -91,12 +91,43 @@ class GamePage extends Component {
           }
         }
 
+        if(this.columns[j].slots[i].brickInside[0] === undefined){
+          winCounter = 0;
+        }
+
         if (winCounter === 4) {
           alert(color + " wins");
           this.newGame();
           return true;
         }
       }
+    }
+
+    let f = 3;
+    let j = 0;
+    for (let i = 0; i < 4; i++) { 
+      if (this.columns[j].slots[f].brickInside[0] !== undefined) {
+        if (this.columns[j].slots[f].brickInside[0].color === color) {
+
+          winCounter++;
+          console.log("hej");
+        }
+      }
+      
+      if (this.columns[j].slots[f].brickInside[0] !== undefined) {
+        if (this.columns[j].slots[f].brickInside[0].color !== color) {
+
+          winCounter = 0;
+        }
+      }
+
+      if (winCounter === 4) {
+        alert(color + " wins");
+        this.newGame();
+        return true;
+      }
+      f--;
+      j++;
     }
   }
 
