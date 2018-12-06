@@ -4,25 +4,27 @@ class GamePage extends Component {
     super();
     this.addRoute('/spela', 'Spela');
     this.addEvents({
-      'click .restart': 'restartGame'
+      'click .restart': 'newGame'
     });
-    this.columns = [
-      new Column(1, this),
-      new Column(2, this),
-      new Column(3, this),
-      new Column(4, this),
-      new Column(5, this),
-      new Column(6, this),
-      new Column(7, this),
-    ];
+    this.newGame();
     this.players = [
       new HumanPlayer('Fredrik', 'yellow'),
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
   }
-  restartGame() {
 
+  newGame() {
+    this.turn = 0;
+    this.columns = [];
+    this.createColumns();
+    this.render();
+  }
+
+  createColumns() {
+    for (let i = 1; i <= 7; i++) {
+      this.columns.push(new Column(i, this));
+    }
   }
 
   addBrickInSlot(column) {
@@ -31,13 +33,18 @@ class GamePage extends Component {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
-      this.winChecker(playerTurn.color);
-      this.changePlayer();
       this.render();
+      if (this.winChecker(playerTurn.color) === true) {
+        return;
+      }
+      this.changePlayer();
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
-      this.makeRandomMove(playerTurn);
-      this.winChecker(playerTurn.color);
+      // this.makeRandomMove(playerTurn);
+      this.render();
+      if (this.winChecker(playerTurn.color) === true) {
+        return;
+      }
     }
   }
 
@@ -62,7 +69,8 @@ class GamePage extends Component {
 
         if (winCounter === 4) {
           alert(color + " wins");
-          break;
+          this.newGame();
+          return true;
         }
       }
     }
@@ -83,11 +91,43 @@ class GamePage extends Component {
           }
         }
 
+        if(this.columns[j].slots[i].brickInside[0] === undefined){
+          winCounter = 0;
+        }
+
         if (winCounter === 4) {
           alert(color + " wins");
-          break;
+          this.newGame();
+          return true;
         }
       }
+    }
+
+    let f = 3;
+    let j = 0;
+    for (let i = 0; i < 4; i++) { 
+      if (this.columns[j].slots[f].brickInside[0] !== undefined) {
+        if (this.columns[j].slots[f].brickInside[0].color === color) {
+
+          winCounter++;
+          console.log("hej");
+        }
+      }
+      
+      if (this.columns[j].slots[f].brickInside[0] !== undefined) {
+        if (this.columns[j].slots[f].brickInside[0].color !== color) {
+
+          winCounter = 0;
+        }
+      }
+
+      if (winCounter === 4) {
+        alert(color + " wins");
+        this.newGame();
+        return true;
+      }
+      f--;
+      j++;
     }
   }
 
