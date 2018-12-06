@@ -3,8 +3,9 @@ class GamePage extends Component {
   constructor() {
     super();
     this.addRoute('/spela', 'Spela');
-    this.addEvents({'click .restart':'restartGame'
-  });
+    this.addEvents({
+      'click .restart': 'restartGame'
+    });
     this.columns = [
       new Column(1, this),
       new Column(2, this),
@@ -15,12 +16,12 @@ class GamePage extends Component {
       new Column(7, this),
     ];
     this.players = [
-      new Player('Fredrik', 'yellow'),
+      new HumanPlayer('Fredrik', 'yellow'),
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
   }
-  restartGame(){
+  restartGame() {
 
   }
 
@@ -30,15 +31,99 @@ class GamePage extends Component {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
+      this.winChecker(playerTurn.color);
       this.changePlayer();
       this.render();
       column.slotIndex--;
+      playerTurn = this.checkWhosTurn();
+      this.makeRandomMove(playerTurn);
+      this.winChecker(playerTurn.color);
     }
+  }
+
+  winChecker(color) {
+
+    let winCounter = 0;
+    for (let j = 0; j < 7; j++) {
+      winCounter = 0;
+      for (let i = 5; i >= 0; i--) {
+        if (this.columns[j].slots[i].brickInside[0] !== undefined) {
+          if (this.columns[j].slots[i].brickInside[0].color === color) {
+
+            winCounter++;
+          }
+        }
+        if (this.columns[j].slots[i].brickInside[0] !== undefined) {
+          if (this.columns[j].slots[i].brickInside[0].color !== color) {
+
+            winCounter = 0;
+          }
+        }
+
+        if (winCounter === 4) {
+          alert(color + " wins");
+          break;
+        }
+      }
+    }
+
+    for (let i = 5; i >= 0; i--) {
+      winCounter = 0;
+      for (let j = 0; j < 7; j++) {
+        if (this.columns[j].slots[i].brickInside[0] !== undefined) {
+          if (this.columns[j].slots[i].brickInside[0].color === color) {
+
+            winCounter++;
+          }
+        }
+        if (this.columns[j].slots[i].brickInside[0] !== undefined) {
+          if (this.columns[j].slots[i].brickInside[0].color !== color) {
+
+            winCounter = 0;
+          }
+        }
+
+        if (winCounter === 4) {
+          alert(color + " wins");
+          break;
+        }
+      }
+    }
+  }
+
+
+  makeRandomMove(playerTurn) {
+    let randCol;
+    let validMoveChecker = false;
+    while (validMoveChecker === false) {
+      randCol = this.players[1].makeRandomizedMove();
+      if (this.botCheckIfColumnIsFull(this.columns[randCol]) === true) {
+        validMoveChecker = true;
+      }
+    }
+
+    this.columns[randCol].bricksInsideMe++;
+    let slot = this.columns[randCol].slots[this.columns[randCol].slotIndex];
+    slot.brickInside.push(new Brick(playerTurn.color));
+    this.changePlayer();
+    this.render();
+    this.columns[randCol].slotIndex--;
+    validMoveChecker = false;
   }
 
   checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return true; }
-    return alert('This column is full');
+    else {
+      alert('This column is full');
+      return false;
+    }
+  }
+
+  botCheckIfColumnIsFull(column) {
+    if (column.bricksInsideMe < 6) { return true; }
+    else {
+      return false;
+    }
   }
 
   checkWhosTurn() {
