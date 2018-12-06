@@ -36,7 +36,7 @@ class GamePage extends Component {
       this.render();
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
-      //this.makeRandomMove(playerTurn);
+      this.makeRandomMove(playerTurn);
       this.winChecker(playerTurn.color);
     }
   }
@@ -84,7 +84,7 @@ class GamePage extends Component {
         }
 
         if (winCounter === 4) {
-          alert(color + " you wins");
+          alert(color + " wins");
           break;
         }
       }
