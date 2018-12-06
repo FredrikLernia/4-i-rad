@@ -15,6 +15,7 @@ class GamePage extends Component {
   }
 
   newGame(){
+    this.turn = 0;
     this.columns = [];
     this.createColumns();
     this.render();
@@ -32,13 +33,18 @@ class GamePage extends Component {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
-      this.winChecker(playerTurn.color);
-      this.changePlayer();
       this.render();
+      if(this.winChecker(playerTurn.color) === true){
+        return;
+      }
+      this.changePlayer();
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
       this.makeRandomMove(playerTurn);
-      this.winChecker(playerTurn.color);
+      this.render();
+      if(this.winChecker(playerTurn.color) === true){
+        return;
+      }
     }
   }
 
@@ -63,7 +69,8 @@ class GamePage extends Component {
 
         if (winCounter === 4) {
           alert(color + " wins");
-          break;
+          this.newGame();
+          return true;
         }
       }
     }
@@ -86,7 +93,8 @@ class GamePage extends Component {
 
         if (winCounter === 4) {
           alert(color + " wins");
-          break;
+          this.newGame();
+          return true;
         }
       }
     }
