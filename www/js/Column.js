@@ -21,6 +21,7 @@ class Column extends Component {
 
   clickOnMe() {
     this.gamePage.addBrickInSlot(this);
+       // this.gamePage.players[1].makeRandomizedMove(this.gamePage);
   }
 
 }

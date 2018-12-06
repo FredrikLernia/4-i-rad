@@ -5,8 +5,10 @@ class HumanPlayer extends Player{
     super(name, color);
   }
 
-  makeMove(){
+  makeMove(col,gamePage1){
 
-
+    console.log(col);
+    console.log(gamePage1);
+    gamePage1.addBrickInSlot(col);
   }
 }
