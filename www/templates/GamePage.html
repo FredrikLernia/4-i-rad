@@ -1,4 +1,56 @@
-<div>
-  <div class="form"><!-- Lägg till formuläret här! --></div>
+<div class="player-form">
+  <p class="mb-1">Spelare 1:</p>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control player player-one" placeholder="Namn" aria-label="Namn" aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <select class="custom-select choose-player-type" id="inputGroupSelect02">
+        <option selected>Spelartyp</option>
+        <option value="1">Människa</option>
+        <option value="2">Dator</option>
+      </select>
+    </div>
+    <div class="input-group-append">
+      <div class="dropdown">
+        <button class="btn dropdown-toggle choose-color" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Välj färg
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#"><span class="color-box yellow"></span><span class="color-name">Gul</span></a>
+          <a class="dropdown-item" href="#"><span class="color-box red"></span><span class="color-name">Röd</span></a>
+          <a class="dropdown-item" href="#"><span class="color-box green"></span><span class="color-name">Grön</span></a>
+          <a class="dropdown-item" href="#"><span class="color-box purple"></span><span class="color-name">Lila</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="mb-1">Spelare 2:</p>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control player player-one" placeholder="Namn" aria-label="Namn" aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <select class="custom-select choose-player-type" id="inputGroupSelect02">
+        <option selected>Spelartyp</option>
+        <option value="1">Människa</option>
+        <option value="2">Dator</option>
+      </select>
+    </div>
+    <div class="input-group-append">
+      <div class="dropdown">
+        <button class="btn dropdown-toggle choose-color" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Välj färg
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#"><span class="color-box yellow"></span><span class="color-name">Gul</span></a>
+          <a class="dropdown-item" href="#"><span class="color-box red"></span><span class="color-name">Röd</span></a>
+          <a class="dropdown-item" href="#"><span class="color-box green"></span><span class="color-name">Grön</span></a>
+          <a class="dropdown-item" href="#"><span class="color-box purple"></span><span class="color-name">Lila</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4">
+    <button type="button" class="btn btn-dark float-right">Starta spel</button>
+  </div>
   <div class="game">${this.game}</div>
 </div>
