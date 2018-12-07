@@ -11,7 +11,7 @@ class Game extends Component {
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
-  }
+      }
 
   newGame() {
     this.turn = 0;
