@@ -1,5 +1,5 @@
 .player-form {
-  width: 50%;
+  width: 80%;
   margin: auto;
 }
 
@@ -13,16 +13,16 @@ input[type="text"], .btn, select {
   -webkit-appearance: none;
 }
 
-.choose-player-type {
+/* .choose-player-type {
   border-radius: 0;
-}
+} */
 
-.choose-color {
+/* .choose-color {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border: 1px solid $input-border-color;
   color: $input-color;
-}
+} */
 
 .color-box {
   display: inline-block;
