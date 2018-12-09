@@ -11,7 +11,7 @@ class Game extends Component {
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
-  }
+      }
 
   newGame() {
     this.turn = 0;
@@ -40,6 +40,7 @@ class Game extends Component {
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
       this.makeRandomMove(playerTurn);
+      this.checkForDraw();
       this.render();
       if (this.winChecker(playerTurn.color) === true) {
         return;
@@ -148,6 +149,23 @@ class Game extends Component {
     this.render();
     this.columns[randCol].slotIndex--;
     validMoveChecker = false;
+  }
+
+  checkForDraw() {
+    let drawCounter = 0;
+
+    for (let i = 0; i <= 5; i++) {
+      for (let j = 0; j <= 6; j++) {
+        if (this.columns[j].slots[i].brickInside[0] !== undefined ) {
+          drawCounter++;
+        }
+      }
+      if (drawCounter === 42) {
+        alert('draw')
+        this.newGame();
+        return true;
+      }
+    }
   }
 
   checkIfColumnIsFull(column) {
