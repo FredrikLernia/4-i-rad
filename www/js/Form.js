@@ -1,9 +1,7 @@
 class Form extends Component {
-constructor() {
+
+  constructor() {
     super();
-    
-}
-
-
+  }
 
 }
