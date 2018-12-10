@@ -33,15 +33,19 @@ class Game extends Component {
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
       this.render();
-      this.newWinChecker(playerTurn.color);
+      if(this.newWinChecker(playerTurn.color)){
+        return;
+      }
 
       this.changePlayer();
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
-      //this.makeRandomMove(playerTurn);
+      this.makeRandomMove(playerTurn);
       this.checkForDraw();
       this.render();
-      this.newWinChecker(playerTurn.color);
+      if(this.newWinChecker(playerTurn.color)){
+        return;
+      }
     }
   }
 
