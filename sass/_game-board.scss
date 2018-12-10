@@ -32,7 +32,7 @@
       box-shadow: inset 2px 2px 2px #000;
 
       &:first-child .brick {
-        animation: pulse linear 2s infinite alternate;
+        animation: pulse linear 2s 1 alternate;
       }
 
       .brick {
@@ -49,6 +49,7 @@
 }
 
 @keyframes pulse {
-  0%{border-radius: 10px; }
-  100%{border-radius:50px; }
+  0%{border-radius: 10px;}
+  50%{border-radius: 50px; }
+  100%{border-radius:60px; }
 }
