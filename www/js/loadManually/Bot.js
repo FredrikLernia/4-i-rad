@@ -1,8 +1,8 @@
 class Bot extends Player{
 
-  constructor(name, color){
+  constructor(color){
 
-    super(name, color);
+    super(color);
   }
 
   makeRandomizedMove(){

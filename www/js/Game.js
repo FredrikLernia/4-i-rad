@@ -6,10 +6,7 @@ class Game extends Component {
       'click .restart': 'newGame'
     });
     this.newGame();
-    this.players = [
-      new HumanPlayer('Fredrik', 'yellow'),
-      new Bot('Trump', 'red')
-    ];
+    this.players = [];
     this.turn = 0;
   }
 

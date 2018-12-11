@@ -8,15 +8,42 @@ class PlayerInput extends Component {
     });
     this.playerNr = playerNr;
     this.form = form;
+    this.playerName = '';
     this.playerType = ['👨‍💻 Spelartyp'];
     this.chosenColor = ['🎨 Färg'];
     Store.chosenColors = [];
+    this.colorTranslation = {
+      'Gul': 'yellow',
+      'Röd': 'red',
+      'Grön': 'green',
+      'Lila': 'purple'
+    };
   }
 
   choosePlayerType(e) {
     e.preventDefault();
     this.playerType = [e.target.innerHTML];
+
+    // This is for not having to rewrite your name every time
+    // you change player type
+    this.playerName = this.baseEl.find('.player-name').val();
+
     this.render();
+    
+    // Hide all classes that are in Store, must be here
+    // too since we render this component
+    for (let colorToHide of Store.chosenColors) {
+      let nameOfClass = '.' + colorToHide.colorClass;
+      this.form.baseEl.find(nameOfClass).hide();
+    }
+
+    // Adds the player type to the player object in form
+    if (this.playerNr === 1) {
+      this.form.playerOne.type = this.playerType[0];
+    }
+    else {
+      this.form.playerTwo.type = this.playerType[0];
+    }
   }
 
   chooseColor(e) {
@@ -56,6 +83,11 @@ class PlayerInput extends Component {
 
     // Change the button to the selected color
     this.chosenColor = [listColorHTML];
+
+    // This is for not having to rewrite your name every time
+    // you change color
+    this.playerName = this.baseEl.find('.player-name').val();
+
     this.render();
 
     this.form.render();
@@ -64,6 +96,14 @@ class PlayerInput extends Component {
     for (let colorToHide of Store.chosenColors) {
       let nameOfClass = '.' + colorToHide.colorClass;
       this.form.baseEl.find(nameOfClass).hide();
+    }
+
+    // Adds the color translated to english to the player object in form
+    if (this.playerNr === 1) {
+      this.form.playerOne.color = this.colorTranslation[listColorName];
+    }
+    else {
+      this.form.playerTwo.color = this.colorTranslation[listColorName];
     }
   }
 

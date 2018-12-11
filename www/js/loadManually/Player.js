@@ -1,8 +1,6 @@
 class Player {
 
-  constructor(name, color){
-
-    this.name = name;
+  constructor(color){
     this.color = color;
     this.movesMade = 0;
     this.isYourTurn = false;
