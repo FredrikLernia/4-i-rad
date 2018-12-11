@@ -42,11 +42,7 @@ class Game extends Component {
       }
 
       this.changePlayer();
-      this.delta = (Date.now() - this.start)/1000;
-      this.totalTime += this.delta;
-      console.log("time for this move: " + this.delta);
-      console.log("total time passed: " + this.totalTime);
-      this.start = Date.now();
+      this.moveTimer();
       column.slotIndex--;
 
       playerTurn = this.checkWhosTurn();
@@ -58,6 +54,15 @@ class Game extends Component {
       this.checkForDraw();
       this.render();
     }
+  }
+
+  moveTimer() {
+
+    this.delta = (Date.now() - this.start) / 1000;
+    this.totalTime += Math.round(this.delta * 1000) / 1000;
+    console.log("time for this move: " + this.delta);
+    console.log("total time passed: " + this.totalTime);
+    this.start = Date.now();
   }
 
   startTimer() {
