@@ -11,7 +11,7 @@ class Game extends Component {
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
-      }
+  }
 
   newGame() {
     this.turn = 0;
@@ -32,8 +32,10 @@ class Game extends Component {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
+      playerTurn.moveCounter();
       this.render();
       if(this.newWinChecker(playerTurn.color)){
+        this.players[0].resetMovesCounter()
         return;
       }
 
@@ -44,6 +46,7 @@ class Game extends Component {
       this.checkForDraw();
       this.render();
       if(this.newWinChecker(playerTurn.color)){
+        this.players[0].resetMovesCounter();
         return;
       }
     }
@@ -194,6 +197,7 @@ class Game extends Component {
       if (drawCounter === 42) {
         alert('draw')
         this.newGame();
+        this.players[0].resetMovesCounter();
         return true;
       }
     }
@@ -215,6 +219,7 @@ class Game extends Component {
   }
 
   checkWhosTurn() {
+
     return this.players[this.turn];
   }
 

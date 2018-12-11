@@ -13,9 +13,12 @@ class Player {
 
   }
 
-  moveCounter(movesMade){
+  moveCounter(){
+    this.movesMade++;
+    return this.movesMade;
+  }
 
-    movesMade++;
-    return movesMade;
+  resetMovesCounter(){
+    this.movesMade = 0;
   }
 }
