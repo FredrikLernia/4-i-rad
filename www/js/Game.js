@@ -11,7 +11,7 @@ class Game extends Component {
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
-      }
+  }
 
   newGame() {
     this.turn = 0;
@@ -33,7 +33,7 @@ class Game extends Component {
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
       this.render();
-      if(this.newWinChecker(playerTurn.color)){
+      if (this.newWinChecker(playerTurn.color)) {
         return;
       }
 
@@ -41,40 +41,46 @@ class Game extends Component {
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
       this.makeRandomMove(playerTurn);
-      this.checkForDraw();
-      this.render();
-      if(this.newWinChecker(playerTurn.color)){
+      if (this.newWinChecker(playerTurn.color)) {
         return;
       }
+      this.checkForDraw();
+      this.render();
     }
   }
 
-  newWinChecker(playerColor){
-    
-    for(let col = 0; col < 7; col++){
-      for(let row = 0; row < 6 ; row++){
-          let hor = true, ver = true, dia1 = true, dia2 = true;
-          let horCheck = false, verCheck = false, dia1Check = false, dia2Check = false;
-          
-          for(let i = 0; i < 4; i++){
-            
-            horCheck = this.columns[col+i];
-            hor = hor && horCheck && this.columns[col+i].slots[row].brickInside[0] !== undefined && this.columns[col+i].slots[row].brickInside[0].color === playerColor;
-            
-            verCheck = this.columns[col].slots[row+i];
-            ver = ver && verCheck && this.columns[col].slots[row+i].brickInside[0] !== undefined && this.columns[col].slots[row+i].brickInside[0].color === playerColor;
-            
-            dia1Check = this.columns[col+i];
-            dia1 = dia1 && dia1Check && this.columns[col+i].slots[row+i] !== undefined && this.columns[col+i].slots[row+i].brickInside[0] !== undefined && this.columns[col+i].slots[row+i].brickInside[0].color === playerColor;
+  delay(ms) {
+    ms += new Date().getTime();
+    while (new Date() < ms) { }
+  }
 
-            dia2Check = this.columns[col+i];
-            dia2 = dia2 && dia2Check && this.columns[col+i].slots[row-i] !== undefined && this.columns[col+i].slots[row-i].brickInside[0] !== undefined && this.columns[col+i].slots[row-i].brickInside[0].color === playerColor;
-            
-          }
-          if(hor || ver || dia1 || dia2){
+  newWinChecker(playerColor) {
+
+    for (let col = 0; col < 7; col++) {
+      for (let row = 0; row < 6; row++) {
+        let hor = true, ver = true, dia1 = true, dia2 = true;
+        let horCheck = false, verCheck = false, dia1Check = false, dia2Check = false;
+
+        for (let i = 0; i < 4; i++) {
+
+          horCheck = this.columns[col + i];
+          hor = hor && horCheck && this.columns[col + i].slots[row].brickInside[0] !== undefined && this.columns[col + i].slots[row].brickInside[0].color === playerColor;
+
+          verCheck = this.columns[col].slots[row + i];
+          ver = ver && verCheck && this.columns[col].slots[row + i].brickInside[0] !== undefined && this.columns[col].slots[row + i].brickInside[0].color === playerColor;
+
+          dia1Check = this.columns[col + i];
+          dia1 = dia1 && dia1Check && this.columns[col + i].slots[row + i] !== undefined && this.columns[col + i].slots[row + i].brickInside[0] !== undefined && this.columns[col + i].slots[row + i].brickInside[0].color === playerColor;
+
+          dia2Check = this.columns[col + i];
+          dia2 = dia2 && dia2Check && this.columns[col + i].slots[row - i] !== undefined && this.columns[col + i].slots[row - i].brickInside[0] !== undefined && this.columns[col + i].slots[row - i].brickInside[0].color === playerColor;
+
+        }
+        if (hor || ver || dia1 || dia2) {
           alert(playerColor + " wins");
           this.newGame();
-          return true;}
+          return true;
+        }
       }
     }
   }
@@ -122,7 +128,7 @@ class Game extends Component {
           }
         }
 
-        if(this.columns[j].slots[i].brickInside[0] === undefined){
+        if (this.columns[j].slots[i].brickInside[0] === undefined) {
           winCounter = 0;
         }
 
@@ -136,7 +142,7 @@ class Game extends Component {
 
     let f = 3;
     let j = 0;
-    for (let i = 0; i < 4; i++) { 
+    for (let i = 0; i < 4; i++) {
       if (this.columns[j].slots[f].brickInside[0] !== undefined) {
         if (this.columns[j].slots[f].brickInside[0].color === color) {
 
@@ -144,7 +150,7 @@ class Game extends Component {
           console.log("hej");
         }
       }
-      
+
       if (this.columns[j].slots[f].brickInside[0] !== undefined) {
         if (this.columns[j].slots[f].brickInside[0].color !== color) {
 
@@ -187,7 +193,7 @@ class Game extends Component {
 
     for (let i = 0; i <= 5; i++) {
       for (let j = 0; j <= 6; j++) {
-        if (this.columns[j].slots[i].brickInside[0] !== undefined ) {
+        if (this.columns[j].slots[i].brickInside[0] !== undefined) {
           drawCounter++;
         }
       }
