@@ -11,6 +11,9 @@ class Game extends Component {
       new Bot('Trump', 'red')
     ];
     this.turn = 0;
+    this.delta = 0;
+    this.totalTime = 0;
+    this.start = Date.now();
   }
 
   newGame() {
@@ -18,6 +21,7 @@ class Game extends Component {
     this.columns = [];
     this.createColumns();
     this.render();
+    //this.startTimer();
   }
 
   createColumns() {
@@ -38,9 +42,15 @@ class Game extends Component {
       }
 
       this.changePlayer();
+      this.delta = (Date.now() - this.start)/1000;
+      this.totalTime += this.delta;
+      console.log("time for this move: " + this.delta);
+      console.log("total time passed: " + this.totalTime);
+      this.start = Date.now();
       column.slotIndex--;
+
       playerTurn = this.checkWhosTurn();
-      this.test();
+      //this.delay(1000);
       this.makeRandomMove(playerTurn);
       if (this.newWinChecker(playerTurn.color)) {
         return;
@@ -50,20 +60,27 @@ class Game extends Component {
     }
   }
 
+  startTimer() {
+    let start = Date.now();
+    setInterval(function () {
+      this.delta = Date.now() - start; // milliseconds elapsed since start
+      this.delta = Math.floor(this.delta / 1000); // in seconds
+      // alternatively just show wall clock time:
+    }, 1000);
+  }
+
   delay(ms) {
     ms += new Date().getTime();
     while (new Date() < ms) { }
   }
 
-  sleep(ms){
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  async test() {
+
+    await sleep(1000);
   }
 
-  async test(){
-    for(let i = 0; i < 7; i++){
-      console.log(i);
-      await sleep(1000);
-    }
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   newWinChecker(playerColor) {
