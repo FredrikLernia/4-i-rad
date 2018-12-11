@@ -185,9 +185,9 @@ class Game extends Component {
   checkForDraw() {
     let drawCounter = 0;
 
-    for (let i = 0; i <= 5; i++) {
-      for (let j = 0; j <= 6; j++) {
-        if (this.columns[j].slots[i].brickInside[0] !== undefined ) {
+    for (let row = 0; row <= 5; row++) {
+      for (let col = 0; col <= 6; col++) {
+        if (this.columns[col].slots[row].brickInside[0] !== undefined ) {
           drawCounter++;
         }
       }
