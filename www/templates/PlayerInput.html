@@ -2,13 +2,17 @@
   <p class="mb-1">Spelare ${this.playerNr}:</p>
   <div class="row mb-3 player-one">
     <div class="col-md-6">
+      ${this.playerType[0] === '💻 Dator' ? `
+      <input type="text" class="form-control player player-one" placeholder="Namn" aria-label="Namn" disabled>
+      ` : `
       <input type="text" class="form-control player player-one" placeholder="Namn" aria-label="Namn">
+      `}
     </div>
     <div class="col-md-6 px-md-0 pt-3 pt-md-0 input-group">
       <div class="dropdown input-group-prepend">
         <button class="btn dropdown-toggle choose-player-type" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          👨‍💻 Spelartyp
+          ${this.playerType[0]}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item player-type" href="#">👨 Människa</a>
@@ -18,13 +22,14 @@
       <div class="dropdown input-group-append">
         <button class="btn dropdown-toggle choose-color" type="button" id="dropdownMenuButton" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          🎨 Färg
+          ${this.chosenColor[0]}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item color-name" href="#"><span class="color-box yellow"></span>Gul</a>
-          <a class="dropdown-item color-name" href="#"><span class="color-box red"></span>Röd</a>
-          <a class="dropdown-item color-name" href="#"><span class="color-box green"></span>Grön</a>
-          <a class="dropdown-item color-name" href="#"><span class="color-box purple"></span>Lila</a>
+          <!-- Important! If you want to add more classes to the <a>-tags below, do it after the existing ones -->
+          <a class="dropdown-item color-name select-yellow" href="#"><span class="color-box yellow"></span>Gul</a>
+          <a class="dropdown-item color-name select-red" href="#"><span class="color-box red"></span>Röd</a>
+          <a class="dropdown-item color-name select-green" href="#"><span class="color-box green"></span>Grön</a>
+          <a class="dropdown-item color-name select-purple" href="#"><span class="color-box purple"></span>Lila</a>
         </div>
       </div>
     </div>
