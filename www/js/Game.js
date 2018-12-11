@@ -40,6 +40,7 @@ class Game extends Component {
       this.changePlayer();
       column.slotIndex--;
       playerTurn = this.checkWhosTurn();
+      this.test();
       this.makeRandomMove(playerTurn);
       if (this.newWinChecker(playerTurn.color)) {
         return;
@@ -52,6 +53,17 @@ class Game extends Component {
   delay(ms) {
     ms += new Date().getTime();
     while (new Date() < ms) { }
+  }
+
+  sleep(ms){
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async test(){
+    for(let i = 0; i < 7; i++){
+      console.log(i);
+      await sleep(1000);
+    }
   }
 
   newWinChecker(playerColor) {
