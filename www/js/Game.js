@@ -16,6 +16,8 @@ class Game extends Component {
     this.turn = 0;
     this.columns = [];
     this.createColumns();
+    this.players[0].resetMovesCounter();
+    this.players[1].resetMovesCounter();
     this.render();
     //this.startTimer();
   }
@@ -51,6 +53,7 @@ class Game extends Component {
       this.render();
       if (this.newWinChecker(playerTurn.color)) {
         this.players[0].resetMovesCounter();
+        this.players[1].resetMovesCounter();
         this.render();
         return;
       }
@@ -67,6 +70,7 @@ class Game extends Component {
     this.render();
     if (this.newWinChecker(playerTurn.color)) {
       this.players[0].resetMovesCounter();
+      this.players[1].resetMovesCounter();
       this.render();
       return;
     }
@@ -251,6 +255,7 @@ class Game extends Component {
         alert('draw')
         this.newGame();
         this.players[0].resetMovesCounter();
+        this.players[1].resetMovesCounter();
         return true;
       }
     }
