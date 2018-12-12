@@ -3,12 +3,15 @@ class GamePage extends Component {
   constructor() {
     super();
     this.addRoute('/spela', 'Spela');
-    this.form = [
-      new Form(this)
-    ];
-    this.game = [
-      new Game()
-    ];
+    this.players = [];
+    this.form = new Form(this);
+  }
+
+  createGame() {
+    this.game = new Game(this.players);
+    this.render();
+    this.baseEl.find('.form').hide();
+    this.baseEl.find('.game').show();
   }
 
 }
