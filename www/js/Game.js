@@ -43,7 +43,7 @@ class Game extends Component {
 
   playerMove(playerTurn, column) {
 
-    if (this.checkIfColumnIsFull(column)) {
+    if (!this.checkIfColumnIsFull(column)) {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
