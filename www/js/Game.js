@@ -13,6 +13,7 @@ class Game extends Component {
   }
 
   startNewGame() {
+    this.isWaiting = false;
     this.turn = 0;
     this.columns = [];
     this.createColumns();
@@ -31,15 +32,22 @@ class Game extends Component {
   addBrickInSlot(column) {
     let playerTurn = this.checkWhosTurn();
 
+    if(this.players[1] instanceof Bot && this.isWaiting === true){
+    return;
+    }
+    else{
     this.playerMove(playerTurn, column);
 
     this.changePlayer();
     this.moveTimer();
     column.slotIndex--;
+    this.isWaiting = true;
+    }
 
     playerTurn = this.checkWhosTurn();
     setTimeout(() => {
       this.botMove(playerTurn);
+      this.isWaiting = false;
     }, 1000);
   }
 
