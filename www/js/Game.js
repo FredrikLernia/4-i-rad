@@ -3,20 +3,22 @@ class Game extends Component {
   constructor(players) {
     super();
     this.addEvents({
-      'click .restart': 'newGame'
+      'click .restart': 'startNewGame'
     });
     this.players = players;
     this.delta = 0;
     this.totalTime = 0;
     this.start = Date.now();
-    this.newGame();
+    this.startNewGame();
   }
-  newGame() {
+
+  startNewGame() {
     this.isWaiting = false;
-    console.log(this.players);
     this.turn = 0;
     this.columns = [];
     this.createColumns();
+    this.players[0].resetMovesCounter();
+    this.players[1].resetMovesCounter();
     this.render();
     //this.startTimer();
   }
@@ -51,7 +53,7 @@ class Game extends Component {
 
   playerMove(playerTurn, column) {
 
-    if (this.checkIfColumnIsFull(column)) {
+    if (!this.checkIfColumnIsFull(column)) {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
@@ -59,6 +61,7 @@ class Game extends Component {
       this.render();
       if (this.newWinChecker(playerTurn.color)) {
         this.players[0].resetMovesCounter();
+        this.players[1].resetMovesCounter();
         this.render();
         return;
       }
@@ -75,6 +78,7 @@ class Game extends Component {
     this.render();
     if (this.newWinChecker(playerTurn.color)) {
       this.players[0].resetMovesCounter();
+      this.players[1].resetMovesCounter();
       this.render();
       return;
     }
@@ -136,7 +140,7 @@ class Game extends Component {
         }
         if (hor || ver || dia1 || dia2) {
           alert(playerColor + " wins");
-          this.newGame();
+          this.startNewGame();
           return true;
         }
       }
@@ -164,7 +168,7 @@ class Game extends Component {
 
         if (winCounter === 4) {
           alert(color + " wins");
-          this.newGame();
+          this.startNewGame();
           return true;
         }
       }
@@ -192,7 +196,7 @@ class Game extends Component {
 
         if (winCounter === 4) {
           alert(color + " wins");
-          this.newGame();
+          this.startNewGame();
           return true;
         }
       }
@@ -218,7 +222,7 @@ class Game extends Component {
 
       if (winCounter === 4) {
         alert(color + " wins");
-        this.newGame();
+        this.startNewGame();
         return true;
       }
       f--;
@@ -232,7 +236,7 @@ class Game extends Component {
     let validMoveChecker = false;
     while (validMoveChecker === false) {
       randCol = this.players[1].makeRandomizedMove();
-      if (this.botCheckIfColumnIsFull(this.columns[randCol]) === true) {
+      if (!this.botCheckIfColumnIsFull(this.columns[randCol])) {
         validMoveChecker = true;
       }
     }
@@ -257,27 +261,22 @@ class Game extends Component {
       }
       if (drawCounter === 42) {
         alert('draw')
-        this.newGame();
+        this.startNewGame();
         this.players[0].resetMovesCounter();
+        this.players[1].resetMovesCounter();
         return true;
       }
     }
   }
 
   checkIfColumnIsFull(column) {
-    if (column.bricksInsideMe < 6) { return true; }
-    else {
-      //alert('This column is full');
-      
-      return false;
-    }
+    if (column.bricksInsideMe < 6) { return false; }
+    alert('This column is full')
   }
 
   botCheckIfColumnIsFull(column) {
-    if (column.bricksInsideMe < 6) { return true; }
-    else {
-      return false;
-    }
+    if (column.bricksInsideMe < 6) { return false; }
+    return true;
   }
 
   checkWhosTurn() {
@@ -288,6 +287,7 @@ class Game extends Component {
   changePlayer() {
     if (this.turn === 0) { this.turn++; }
     else { this.turn--; }
+    this.render();
   }
 
 }
