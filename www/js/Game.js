@@ -1,23 +1,24 @@
 class Game extends Component {
 
-  constructor() {
+  constructor(players) {
     super();
     this.addEvents({
       'click .restart': 'newGame'
     });
+    this.players = players;
+    this.delta = 0;
+    this.totalTime = 0;
+    this.start = Date.now();
     this.newGame();
-    this.players = [
-      new HumanPlayer('Fredrik', 'yellow'),
-      new Bot('Trump', 'red')
-    ];
-    this.turn = 0;
-      }
+  }
 
   newGame() {
+    console.log(this.players);
     this.turn = 0;
     this.columns = [];
     this.createColumns();
     this.render();
+    //this.startTimer();
   }
 
   createColumns() {
@@ -32,49 +33,91 @@ class Game extends Component {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
+      playerTurn.moveCounter();
       this.render();
       if(this.newWinChecker(playerTurn.color)){
+        this.players[0].resetMovesCounter()
         return;
       }
 
       this.changePlayer();
+      this.moveTimer();
       column.slotIndex--;
+
       playerTurn = this.checkWhosTurn();
+      //this.delay(1000);
       this.makeRandomMove(playerTurn);
+      if (this.newWinChecker(playerTurn.color)) {
+        return;
+      }
       this.checkForDraw();
       this.render();
       if(this.newWinChecker(playerTurn.color)){
+        this.players[0].resetMovesCounter();
         return;
       }
     }
   }
 
-  newWinChecker(playerColor){
-    
-    for(let col = 0; col < 7; col++){
-      for(let row = 0; row < 6 ; row++){
-          let hor = true, ver = true, dia1 = true, dia2 = true;
-          let horCheck = false, verCheck = false, dia1Check = false, dia2Check = false;
-          
-          for(let i = 0; i < 4; i++){
-            
-            horCheck = this.columns[col+i];
-            hor = hor && horCheck && this.columns[col+i].slots[row].brickInside[0] !== undefined && this.columns[col+i].slots[row].brickInside[0].color === playerColor;
-            
-            verCheck = this.columns[col].slots[row+i];
-            ver = ver && verCheck && this.columns[col].slots[row+i].brickInside[0] !== undefined && this.columns[col].slots[row+i].brickInside[0].color === playerColor;
-            
-            dia1Check = this.columns[col+i];
-            dia1 = dia1 && dia1Check && this.columns[col+i].slots[row+i] !== undefined && this.columns[col+i].slots[row+i].brickInside[0] !== undefined && this.columns[col+i].slots[row+i].brickInside[0].color === playerColor;
+  moveTimer() {
 
-            dia2Check = this.columns[col+i];
-            dia2 = dia2 && dia2Check && this.columns[col+i].slots[row-i] !== undefined && this.columns[col+i].slots[row-i].brickInside[0] !== undefined && this.columns[col+i].slots[row-i].brickInside[0].color === playerColor;
-            
-          }
-          if(hor || ver || dia1 || dia2){
+    this.delta = (Date.now() - this.start) / 1000;
+    this.totalTime += Math.round(this.delta * 1000) / 1000;
+    console.log("time for this move: " + this.delta);
+    console.log("total time passed: " + this.totalTime);
+    this.start = Date.now();
+  }
+
+  startTimer() {
+    let start = Date.now();
+    setInterval(function () {
+      this.delta = Date.now() - start; // milliseconds elapsed since start
+      this.delta = Math.floor(this.delta / 1000); // in seconds
+      // alternatively just show wall clock time:
+    }, 1000);
+  }
+
+  delay(ms) {
+    ms += new Date().getTime();
+    while (new Date() < ms) { }
+  }
+
+  async test() {
+
+    await sleep(1000);
+  }
+
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  newWinChecker(playerColor) {
+
+    for (let col = 0; col < 7; col++) {
+      for (let row = 0; row < 6; row++) {
+        let hor = true, ver = true, dia1 = true, dia2 = true;
+        let horCheck = false, verCheck = false, dia1Check = false, dia2Check = false;
+
+        for (let i = 0; i < 4; i++) {
+
+          horCheck = this.columns[col + i];
+          hor = hor && horCheck && this.columns[col + i].slots[row].brickInside[0] !== undefined && this.columns[col + i].slots[row].brickInside[0].color === playerColor;
+
+          verCheck = this.columns[col].slots[row + i];
+          ver = ver && verCheck && this.columns[col].slots[row + i].brickInside[0] !== undefined && this.columns[col].slots[row + i].brickInside[0].color === playerColor;
+
+          dia1Check = this.columns[col + i];
+          dia1 = dia1 && dia1Check && this.columns[col + i].slots[row + i] !== undefined && this.columns[col + i].slots[row + i].brickInside[0] !== undefined && this.columns[col + i].slots[row + i].brickInside[0].color === playerColor;
+
+          dia2Check = this.columns[col + i];
+          dia2 = dia2 && dia2Check && this.columns[col + i].slots[row - i] !== undefined && this.columns[col + i].slots[row - i].brickInside[0] !== undefined && this.columns[col + i].slots[row - i].brickInside[0].color === playerColor;
+
+        }
+        if (hor || ver || dia1 || dia2) {
           alert(playerColor + " wins");
           this.newGame();
-          return true;}
+          return true;
+        }
       }
     }
   }
@@ -122,7 +165,7 @@ class Game extends Component {
           }
         }
 
-        if(this.columns[j].slots[i].brickInside[0] === undefined){
+        if (this.columns[j].slots[i].brickInside[0] === undefined) {
           winCounter = 0;
         }
 
@@ -136,7 +179,7 @@ class Game extends Component {
 
     let f = 3;
     let j = 0;
-    for (let i = 0; i < 4; i++) { 
+    for (let i = 0; i < 4; i++) {
       if (this.columns[j].slots[f].brickInside[0] !== undefined) {
         if (this.columns[j].slots[f].brickInside[0].color === color) {
 
@@ -144,7 +187,7 @@ class Game extends Component {
           console.log("hej");
         }
       }
-      
+
       if (this.columns[j].slots[f].brickInside[0] !== undefined) {
         if (this.columns[j].slots[f].brickInside[0].color !== color) {
 
@@ -185,15 +228,16 @@ class Game extends Component {
   checkForDraw() {
     let drawCounter = 0;
 
-    for (let i = 0; i <= 5; i++) {
-      for (let j = 0; j <= 6; j++) {
-        if (this.columns[j].slots[i].brickInside[0] !== undefined ) {
+    for (let row = 0; row <= 5; row++) {
+      for (let col = 0; col <= 6; col++) {
+        if (this.columns[col].slots[row].brickInside[0] !== undefined ) {
           drawCounter++;
         }
       }
       if (drawCounter === 42) {
         alert('draw')
         this.newGame();
+        this.players[0].resetMovesCounter();
         return true;
       }
     }
@@ -216,6 +260,7 @@ class Game extends Component {
   }
 
   checkWhosTurn() {
+
     return this.players[this.turn];
   }
 
