@@ -1,4 +1,15 @@
 <div class="game-board container-fluid">
   ${this.columns}
   <button class="restart">Restart Game</button>
+  <div class="row">
+      <div class="col-5 select">
+        <div class="player-one">${this.playerInputs}</div>
+      </div>
+      <div class="col-2">
+        <h4 class="versus">VS.</h4>
+      </div>
+      <div class="col-5">
+        <div class="player-two">${this.players.name}</div>
+      </div>
+    </div>
 </div>

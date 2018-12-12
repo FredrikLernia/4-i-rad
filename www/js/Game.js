@@ -1,26 +1,25 @@
 class Game extends Component {
 
-  constructor() {
+  constructor(players) {
     super();
     this.addEvents({
       'click .restart': 'newGame'
     });
-    this.newGame();
-    this.players = [];
-    this.turn = 0;
+    this.players = players;
     this.delta = 0;
     this.totalTime = 0;
     this.start = Date.now();
+    this.newGame();
   }
-
   newGame() {
+    console.log(this.players);
     this.turn = 0;
     this.columns = [];
     this.createColumns();
     this.render();
     //this.startTimer();
   }
-
+  
   createColumns() {
     for (let i = 1; i <= 7; i++) {
       this.columns.push(new Column(i, this));
