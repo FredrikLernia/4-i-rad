@@ -13,6 +13,22 @@
       background-color: rgb(82, 82, 255);
       
     }
+    &:before{
+      content:'⬇️';
+      margin-left: 4px;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translate(-50%);
+      display: flex;
+      opacity: 0;
+      z-index: 0;
+      transition: all .2s ease-out;
+    }
+    &:hover:before{
+      bottom: 102%;
+      opacity: 1;
+    }
 
     .hidden-div-for-click {
       position: absolute;
