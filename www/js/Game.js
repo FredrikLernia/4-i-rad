@@ -6,10 +6,7 @@ class Game extends Component {
       'click .restart': 'newGame'
     });
     this.newGame();
-    this.players = [
-      new HumanPlayer('Fredrik', 'yellow'),
-      new Bot('Trump', 'red')
-    ];
+    this.players = [];
     this.turn = 0;
     this.delta = 0;
     this.totalTime = 0;
@@ -36,8 +33,10 @@ class Game extends Component {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
+      playerTurn.moveCounter();
       this.render();
-      if (this.newWinChecker(playerTurn.color)) {
+      if(this.newWinChecker(playerTurn.color)){
+        this.players[0].resetMovesCounter()
         return;
       }
 
@@ -53,6 +52,10 @@ class Game extends Component {
       }
       this.checkForDraw();
       this.render();
+      if(this.newWinChecker(playerTurn.color)){
+        this.players[0].resetMovesCounter();
+        return;
+      }
     }
   }
 
@@ -225,15 +228,16 @@ class Game extends Component {
   checkForDraw() {
     let drawCounter = 0;
 
-    for (let i = 0; i <= 5; i++) {
-      for (let j = 0; j <= 6; j++) {
-        if (this.columns[j].slots[i].brickInside[0] !== undefined) {
+    for (let row = 0; row <= 5; row++) {
+      for (let col = 0; col <= 6; col++) {
+        if (this.columns[col].slots[row].brickInside[0] !== undefined ) {
           drawCounter++;
         }
       }
       if (drawCounter === 42) {
         alert('draw')
         this.newGame();
+        this.players[0].resetMovesCounter();
         return true;
       }
     }
@@ -255,6 +259,7 @@ class Game extends Component {
   }
 
   checkWhosTurn() {
+
     return this.players[this.turn];
   }
 
