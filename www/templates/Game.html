@@ -2,14 +2,20 @@
   ${this.columns}
   <button class="restart">Restart Game</button>
   <div class="row">
-      <div class="col-5 select">
-        <div class="player-one ${this.players[0].color}">${this.players[0].name}</div>
-      </div>
-      <div class="col-2">
-        <h4 class="versus">VS.</h4>
-      </div>
-      <div class="col-5">
-        <div class="player-two ${this.players[1].color}">${this.players[1].name}</div>
+    <div class="col-5">
+      <div class="player-one">${this.players[0].name} ${this.turn === 0 ? `
+        <span class="color-box ${this.players[0].color}"></span>
+        ` : ``}
       </div>
     </div>
+    <div class="col-2">
+      <h4 class="versus">VS.</h4>
+    </div>
+    <div class="col-5">
+      <div class="player-two">${this.players[1].name} ${this.turn === 1 ? `
+        <span class="color-box ${this.players[1].color}"></span>
+        ` : ``}
+      </div>
+    </div>
+  </div>
 </div>

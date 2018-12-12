@@ -3,7 +3,7 @@ class Game extends Component {
   constructor(players) {
     super();
     this.addEvents({
-      'click .restart': 'newGame'
+      'click .restart': 'startNewGame'
     });
     this.players = players;
     this.delta = 0;
@@ -258,7 +258,7 @@ class Game extends Component {
 
   checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return false; }
-    return true;
+    alert('This column is full')
   }
 
   botCheckIfColumnIsFull(column) {
@@ -274,6 +274,7 @@ class Game extends Component {
   changePlayer() {
     if (this.turn === 0) { this.turn++; }
     else { this.turn--; }
+    this.render();
   }
 
 }
