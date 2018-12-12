@@ -28,33 +28,47 @@ class Game extends Component {
 
   addBrickInSlot(column) {
     let playerTurn = this.checkWhosTurn();
+
+    this.playerMove(playerTurn, column);
+
+    this.changePlayer();
+    this.moveTimer();
+    column.slotIndex--;
+
+    playerTurn = this.checkWhosTurn();
+    setTimeout(() => {
+      this.botMove(playerTurn);
+    }, 1000);
+  }
+
+  playerMove(playerTurn, column) {
+
     if (this.checkIfColumnIsFull(column)) {
       column.bricksInsideMe++;
       let slot = column.slots[column.slotIndex];
       slot.brickInside.push(new Brick(playerTurn.color));
       playerTurn.moveCounter();
       this.render();
-      if(this.newWinChecker(playerTurn.color)){
-        this.players[0].resetMovesCounter()
-        return;
-      }
-
-      this.changePlayer();
-      this.moveTimer();
-      column.slotIndex--;
-
-      playerTurn = this.checkWhosTurn();
-      //this.delay(1000);
-      this.makeRandomMove(playerTurn);
       if (this.newWinChecker(playerTurn.color)) {
-        return;
-      }
-      this.checkForDraw();
-      this.render();
-      if(this.newWinChecker(playerTurn.color)){
         this.players[0].resetMovesCounter();
+        this.render();
         return;
       }
+    }
+  }
+
+  botMove(playerTurn) {
+
+    this.makeRandomMove(playerTurn);
+    if (this.newWinChecker(playerTurn.color)) {
+      return;
+    }
+    this.checkForDraw();
+    this.render();
+    if (this.newWinChecker(playerTurn.color)) {
+      this.players[0].resetMovesCounter();
+      this.render();
+      return;
     }
   }
 
