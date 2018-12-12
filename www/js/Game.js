@@ -263,7 +263,7 @@ class Game extends Component {
 
   checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return false; }
-    return true;
+    alert('This column is full')
   }
 
   botCheckIfColumnIsFull(column) {
@@ -279,6 +279,7 @@ class Game extends Component {
   changePlayer() {
     if (this.turn === 0) { this.turn++; }
     else { this.turn--; }
+    this.render();
   }
 
 }
