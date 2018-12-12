@@ -3,13 +3,13 @@
   <button class="restart">Restart Game</button>
   <div class="row">
       <div class="col-5 select">
-        <div class="player-one">${this.playerInputs}</div>
+        <div class="player-one ${this.players[0].color}">${this.players[0].name}</div>
       </div>
       <div class="col-2">
         <h4 class="versus">VS.</h4>
       </div>
       <div class="col-5">
-        <div class="player-two">${this.players.name}</div>
+        <div class="player-two ${this.players[1].color}">${this.players[1].name}</div>
       </div>
     </div>
 </div>
