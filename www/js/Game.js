@@ -3,7 +3,7 @@ class Game extends Component {
   constructor(players) {
     super();
     this.addEvents({
-      'click .restart': 'newGame'
+      'click .restart': 'startNewGame'
     });
     this.players = players;
     this.delta = 0;
