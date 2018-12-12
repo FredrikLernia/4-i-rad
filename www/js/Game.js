@@ -246,7 +246,8 @@ class Game extends Component {
   checkIfColumnIsFull(column) {
     if (column.bricksInsideMe < 6) { return true; }
     else {
-      alert('This column is full');
+      //alert('This column is full');
+      
       return false;
     }
   }
