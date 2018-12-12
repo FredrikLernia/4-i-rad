@@ -12,6 +12,7 @@ class Form extends Component {
     ];
     this.playerOne = {};
     this.playerTwo = {};
+    console.log(this.playerInputs);
   }
 
   storeNames() {

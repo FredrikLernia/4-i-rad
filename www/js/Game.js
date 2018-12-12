@@ -11,7 +11,6 @@ class Game extends Component {
     this.start = Date.now();
     this.newGame();
   }
-
   newGame() {
     console.log(this.players);
     this.turn = 0;
@@ -20,7 +19,7 @@ class Game extends Component {
     this.render();
     //this.startTimer();
   }
-
+  
   createColumns() {
     for (let i = 1; i <= 7; i++) {
       this.columns.push(new Column(i, this));
