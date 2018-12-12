@@ -5,12 +5,13 @@ class Game extends Component {
     this.addEvents({
       'click .restart': 'newGame'
     });
-    this.newGame();
+    
     this.players = [];
     this.turn = 0;
     this.delta = 0;
     this.totalTime = 0;
     this.start = Date.now();
+    this.newGame();
   }
 
   newGame() {
