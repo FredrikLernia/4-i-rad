@@ -45,10 +45,12 @@ class Game extends Component {
     }
 
     playerTurn = this.checkWhosTurn();
+    if(this.players[this.turn] instanceof Bot){
     setTimeout(() => {
       this.botMove(playerTurn);
       this.isWaiting = false;
     }, 1000);
+  }
   }
 
   playerMove(playerTurn, column) {
