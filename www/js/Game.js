@@ -3,17 +3,158 @@ class Game extends Component {
   constructor(players) {
     super();
     this.addEvents({
-      'click .restart': 'startNewGame'
+      'click .restart': 'restartGame'
     });
     this.players = players;
+    this.columns = [];
     this.delta = 0;
     this.totalTime = 0;
     this.start = Date.now();
+    this.createColumns();
     this.startNewGame();
   }
 
+  createColumns() {
+    for (let i = 1; i <= 7; i++) {
+      this.columns.push(new Column(i, this));
+    }
+  }
+
   startNewGame() {
-    this.isWaiting = false;
+    this.turnIndex = 0;
+    this.playerTurn = this.checkWhosTurn();
+    this.gameOver = false;
+    this.movesThisGame = 0;
+    this.playerIsWaiting = false;
+    this.render();
+    if (this.playerTurn instanceof Bot) {
+      this.playerIsWaiting = true;
+      this.botMakeMove();
+    }
+  }
+
+  checkWhosTurn() {
+    return this.players[this.turnIndex];
+  }
+
+  botMakeMove() {
+    if (!this.gameOver) {
+      setTimeout(() => {
+        let randomNumber = this.playerTurn.getRandomNumber();
+        while (!this.addBrickInSlot(this.columns[randomNumber])) {
+          randomNumber = this.playerTurn.getRandomNumber();
+        }
+        this.changePlayer();
+      }, 1000)
+    }
+  }
+
+  humanMakeMove(clickedColumn) {
+    if (!this.gameOver && !this.playerIsWaiting && this.addBrickInSlot(clickedColumn)) {
+      this.changePlayer();
+    }
+  }
+
+  addBrickInSlot(column) {
+    if (this.checkIfColumnIsFull(column)) {
+      return false;
+    }
+
+    column.bricksInsideMe++;
+    this.movesThisGame++;
+
+    let slot = column.slots[column.slotIndex];
+    slot.brickInside.push(new Brick(this.playerTurn.color));
+    column.slotIndex--;
+    this.playerTurn.moveCounter();
+    slot.render();
+
+    if (this.winChecker(this.playerTurn.color)) {
+      this.gameOver = true;
+      setTimeout(() => {
+        this.restartGame();
+        // Go to result page with either win or lose from here
+      }, 2000)
+    }
+
+    if (this.checkForDraw()) {
+      this.gameOver = true;
+      setTimeout(() => {
+        this.restartGame();
+        // Go to result page with draw from here
+      }, 2000)
+    }
+
+    return true;
+  }
+
+  checkIfColumnIsFull(column) {
+    return column.bricksInsideMe >= 6;
+  }
+
+  winChecker(playerColor) {
+
+    for (let col = 0; col < 7; col++) {
+      for (let row = 0; row < 6; row++) {
+        let hor = true, ver = true, dia1 = true, dia2 = true;
+        let horCheck = false, verCheck = false, dia1Check = false, dia2Check = false;
+
+        for (let i = 0; i < 4; i++) {
+
+          horCheck = this.columns[col + i];
+          hor = hor && horCheck && this.columns[col + i].slots[row].brickInside[0] !== undefined && this.columns[col + i].slots[row].brickInside[0].color === playerColor;
+
+          verCheck = this.columns[col].slots[row + i];
+          ver = ver && verCheck && this.columns[col].slots[row + i].brickInside[0] !== undefined && this.columns[col].slots[row + i].brickInside[0].color === playerColor;
+
+          dia1Check = this.columns[col + i];
+          dia1 = dia1 && dia1Check && this.columns[col + i].slots[row + i] !== undefined && this.columns[col + i].slots[row + i].brickInside[0] !== undefined && this.columns[col + i].slots[row + i].brickInside[0].color === playerColor;
+
+          dia2Check = this.columns[col + i];
+          dia2 = dia2 && dia2Check && this.columns[col + i].slots[row - i] !== undefined && this.columns[col + i].slots[row - i].brickInside[0] !== undefined && this.columns[col + i].slots[row - i].brickInside[0].color === playerColor;
+
+        }
+
+        if (hor || ver || dia1 || dia2) {
+          return true;
+        }
+      }
+    }
+  }
+
+  checkForDraw() {
+    return this.movesThisGame === 42;
+  }
+
+  changePlayer() {
+    if (this.turnIndex === 0) { this.turnIndex++; }
+    else { this.turnIndex--; }
+
+    this.playerTurn = this.checkWhosTurn();
+    if (this.playerTurn instanceof Bot) {
+      this.playerIsWaiting = true;
+      this.botMakeMove();
+    }
+    else {
+      this.playerIsWaiting = false;
+    }
+  }
+
+  restartGame() {
+    for (let column of this.columns) {
+      column.emptyColumn();
+    }
+
+    for (let player of this.players) {
+      player.resetMovesCounter();
+    }
+
+    this.startNewGame();
+  }
+  // -------------------------------------------
+
+  /* startNewGame() {
+    //this.isWaiting = false;
     this.turn = 0;
     this.columns = [];
     this.createColumns();
@@ -21,15 +162,15 @@ class Game extends Component {
     this.players[1].resetMovesCounter();
     this.render();
     //this.startTimer();
-  }
-  
-  createColumns() {
+  } */
+
+  /* createColumns() {
     for (let i = 1; i <= 7; i++) {
       this.columns.push(new Column(i, this));
     }
-  }
+  } */
 
-  addBrickInSlot(column) {
+  /* addBrickInSlot(column) {
     let playerTurn = this.checkWhosTurn();
 
     if(this.players[1] instanceof Bot && this.isWaiting === true){
@@ -51,40 +192,11 @@ class Game extends Component {
       this.isWaiting = false;
     }, 1000);
   }
-  }
+  } */
 
-  playerMove(playerTurn, column) {
 
-    if (!this.checkIfColumnIsFull(column)) {
-      column.bricksInsideMe++;
-      let slot = column.slots[column.slotIndex];
-      slot.brickInside.push(new Brick(playerTurn.color));
-      playerTurn.moveCounter();
-      this.render();
-      if (this.newWinChecker(playerTurn.color)) {
-        this.players[0].resetMovesCounter();
-        this.players[1].resetMovesCounter();
-        this.render();
-        return;
-      }
-    }
-  }
 
-  botMove(playerTurn) {
-
-    this.makeRandomMove(playerTurn);
-    if (this.newWinChecker(playerTurn.color)) {
-      return;
-    }
-    this.checkForDraw();
-    this.render();
-    if (this.newWinChecker(playerTurn.color)) {
-      this.players[0].resetMovesCounter();
-      this.players[1].resetMovesCounter();
-      this.render();
-      return;
-    }
-  }
+  
 
   moveTimer() {
 
@@ -118,94 +230,6 @@ class Game extends Component {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  newWinChecker(playerColor) {
 
-    for (let col = 0; col < 7; col++) {
-      for (let row = 0; row < 6; row++) {
-        let hor = true, ver = true, dia1 = true, dia2 = true;
-        let horCheck = false, verCheck = false, dia1Check = false, dia2Check = false;
-
-        for (let i = 0; i < 4; i++) {
-
-          horCheck = this.columns[col + i];
-          hor = hor && horCheck && this.columns[col + i].slots[row].brickInside[0] !== undefined && this.columns[col + i].slots[row].brickInside[0].color === playerColor;
-
-          verCheck = this.columns[col].slots[row + i];
-          ver = ver && verCheck && this.columns[col].slots[row + i].brickInside[0] !== undefined && this.columns[col].slots[row + i].brickInside[0].color === playerColor;
-
-          dia1Check = this.columns[col + i];
-          dia1 = dia1 && dia1Check && this.columns[col + i].slots[row + i] !== undefined && this.columns[col + i].slots[row + i].brickInside[0] !== undefined && this.columns[col + i].slots[row + i].brickInside[0].color === playerColor;
-
-          dia2Check = this.columns[col + i];
-          dia2 = dia2 && dia2Check && this.columns[col + i].slots[row - i] !== undefined && this.columns[col + i].slots[row - i].brickInside[0] !== undefined && this.columns[col + i].slots[row - i].brickInside[0].color === playerColor;
-
-        }
-        if (hor || ver || dia1 || dia2) {
-          alert(playerColor + " wins");
-          this.startNewGame();
-          return true;
-        }
-      }
-    }
-  }
-
-  makeRandomMove(playerTurn) {
-    let randCol;
-    let validMoveChecker = false;
-    while (validMoveChecker === false) {
-      randCol = this.players[1].makeRandomizedMove();
-      if (!this.botCheckIfColumnIsFull(this.columns[randCol])) {
-        validMoveChecker = true;
-      }
-    }
-
-    this.columns[randCol].bricksInsideMe++;
-    let slot = this.columns[randCol].slots[this.columns[randCol].slotIndex];
-    slot.brickInside.push(new Brick(playerTurn.color));
-    this.changePlayer();
-    this.render();
-    this.columns[randCol].slotIndex--;
-    validMoveChecker = false;
-  }
-
-  checkForDraw() {
-    let drawCounter = 0;
-
-    for (let row = 0; row <= 5; row++) {
-      for (let col = 0; col <= 6; col++) {
-        if (this.columns[col].slots[row].brickInside[0] !== undefined ) {
-          drawCounter++;
-        }
-      }
-      if (drawCounter === 42) {
-        alert('draw')
-        this.startNewGame();
-        this.players[0].resetMovesCounter();
-        this.players[1].resetMovesCounter();
-        return true;
-      }
-    }
-  }
-
-  checkIfColumnIsFull(column) {
-    if (column.bricksInsideMe < 6) { return false; }
-    alert('This column is full')
-  }
-
-  botCheckIfColumnIsFull(column) {
-    if (column.bricksInsideMe < 6) { return false; }
-    return true;
-  }
-
-  checkWhosTurn() {
-
-    return this.players[this.turn];
-  }
-
-  changePlayer() {
-    if (this.turn === 0) { this.turn++; }
-    else { this.turn--; }
-    this.render();
-  }
 
 }
