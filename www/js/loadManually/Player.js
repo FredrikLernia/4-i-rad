@@ -8,7 +8,6 @@ class Player {
 
   moveCounter(){
     this.movesMade++;
-    return this.movesMade;
   }
 
   resetMovesCounter(){
