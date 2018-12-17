@@ -7,8 +7,6 @@ class Game extends Component {
     });
     this.players = players;
     this.columns = [];
-    this.delta = 0;
-    this.totalTime = 0;
     this.start = Date.now();
     this.createColumns();
     this.startNewGame();
@@ -151,52 +149,6 @@ class Game extends Component {
 
     this.startNewGame();
   }
-  // -------------------------------------------
-
-  /* startNewGame() {
-    //this.isWaiting = false;
-    this.turn = 0;
-    this.columns = [];
-    this.createColumns();
-    this.players[0].resetMovesCounter();
-    this.players[1].resetMovesCounter();
-    this.render();
-    //this.startTimer();
-  } */
-
-  /* createColumns() {
-    for (let i = 1; i <= 7; i++) {
-      this.columns.push(new Column(i, this));
-    }
-  } */
-
-  /* addBrickInSlot(column) {
-    let playerTurn = this.checkWhosTurn();
-
-    if(this.players[1] instanceof Bot && this.isWaiting === true){
-    return;
-    }
-    else{
-    this.playerMove(playerTurn, column);
-
-    this.changePlayer();
-    this.moveTimer();
-    column.slotIndex--;
-    this.isWaiting = true;
-    }
-
-    playerTurn = this.checkWhosTurn();
-    if(this.players[this.turn] instanceof Bot){
-    setTimeout(() => {
-      this.botMove(playerTurn);
-      this.isWaiting = false;
-    }, 1000);
-  }
-  } */
-
-
-
-  
 
   moveTimer() {
 
@@ -206,30 +158,5 @@ class Game extends Component {
     console.log("total time passed: " + this.totalTime);
     this.start = Date.now();
   }
-
-  startTimer() {
-    let start = Date.now();
-    setInterval(function () {
-      this.delta = Date.now() - start; // milliseconds elapsed since start
-      this.delta = Math.floor(this.delta / 1000); // in seconds
-      // alternatively just show wall clock time:
-    }, 1000);
-  }
-
-  delay(ms) {
-    ms += new Date().getTime();
-    while (new Date() < ms) { }
-  }
-
-  async test() {
-
-    await sleep(1000);
-  }
-
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-
 
 }
