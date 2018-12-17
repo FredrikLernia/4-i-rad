@@ -50,11 +50,15 @@
       border-radius: 50%;
       box-shadow: inset 2px 2px 2px #000;
 
-      /* &:first-child .brick {
+       &:first-child .brick {
         animation: pulse linear 0.5s 1 alternate;
-      } */
+      } 
 
       .brick {
+        background-image: url(/img/spiral.png);
+        background-position: center;
+        width: 80px;
+        height: 80px;
         position: absolute;
         top: 0;
         right: 0;
@@ -67,12 +71,12 @@
   }
 }
 
-/* @keyframes pulse {
+ @keyframes pulse {
   0%{border-radius: 10px;}
   //50%{border-radius: 20px; }
   100%{border-radius:60px;
     transform:rotate(360deg) }
-} */
+} 
 
 .yellow {
   background-color: yellow;
