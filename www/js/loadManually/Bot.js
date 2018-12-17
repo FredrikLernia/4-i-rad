@@ -5,14 +5,8 @@ class Bot extends Player{
     this.name = 'Bot';
   }
 
-  makeRandomizedMove(){
-
-    let rand = Math.floor((Math.random() * 7));
-    return rand--;
-  }
-
-  makeCalculatedMove(){
-
-    
+  getRandomNumber() {
+    let rand = Math.floor(Math.random() * 7);
+    return rand;
   }
 }
