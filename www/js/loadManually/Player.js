@@ -4,7 +4,6 @@ class Player {
     this.color = color;
     this.movesMade = 0;
     this.isYourTurn = false;
-    this.timeOfMoves = 0;
   }
 
   moveCounter(){

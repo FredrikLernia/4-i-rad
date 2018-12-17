@@ -66,7 +66,9 @@ class Game extends Component {
     slot.brickInside.push(new Brick(this.playerTurn.color));
     column.slotIndex--;
     this.playerTurn.moveCounter();
+    if(this.playerTurn instanceof HumanPlayer){
     this.moveTimer();
+    }
     slot.render();
 
     if (this.winChecker(this.playerTurn.color)) {
