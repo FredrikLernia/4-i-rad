@@ -136,6 +136,7 @@ class Game extends Component {
     else {
       this.playerIsWaiting = false;
     }
+    this.render();
   }
 
   restartGame() {
