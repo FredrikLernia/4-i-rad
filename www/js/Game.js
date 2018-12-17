@@ -139,6 +139,7 @@ class Game extends Component {
       this.playerIsWaiting = false;
     }
     this.start = Date.now();
+    this.render();
   }
 
   restartGame() {
