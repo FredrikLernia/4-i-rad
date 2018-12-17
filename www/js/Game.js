@@ -1,11 +1,12 @@
 class Game extends Component {
 
-  constructor(players) {
+  constructor(players, gamePage) {
     super();
     this.addEvents({
       'click .restart': 'restartGame'
     });
     this.players = players;
+    this.gamePage = gamePage;
     this.columns = [];
     this.start = Date.now();
     this.createColumns();
@@ -43,14 +44,18 @@ class Game extends Component {
         while (!this.addBrickInSlot(this.columns[randomNumber])) {
           randomNumber = this.playerTurn.getRandomNumber();
         }
-        this.changePlayer();
+        if (!this.gameOver) {
+          this.changePlayer();
+        }
       }, 1000)
     }
   }
 
   humanMakeMove(clickedColumn) {
     if (!this.gameOver && !this.playerIsWaiting && this.addBrickInSlot(clickedColumn)) {
-      this.changePlayer();
+      if (!this.gameOver) {
+        this.changePlayer();
+      }
     }
   }
 
@@ -66,25 +71,23 @@ class Game extends Component {
     slot.brickInside.push(new Brick(this.playerTurn.color));
     column.slotIndex--;
     this.playerTurn.moveCounter();
-    if(this.playerTurn instanceof HumanPlayer){
-    this.moveTimer();
+    if (this.playerTurn instanceof HumanPlayer) {
+      this.moveTimer();
     }
     slot.render();
 
     if (this.winChecker(this.playerTurn.color)) {
       this.gameOver = true;
       setTimeout(() => {
-        this.restartGame();
-        // Go to result page with either win or lose from here
-      }, 2000)
+        this.redirectToMiddlePage('won/lost');
+      }, 1500)
     }
 
     if (this.checkForDraw()) {
       this.gameOver = true;
       setTimeout(() => {
-        this.restartGame();
-        // Go to result page with draw from here
-      }, 2000)
+        this.redirectToMiddlePage('draw');
+      }, 1500)
     }
 
     return true;
@@ -163,6 +166,35 @@ class Game extends Component {
     console.log("time for this move: " + this.delta);
     console.log("total time passed: " + this.players[this.turnIndex].timeOfMoves);
     this.start = Date.now();
+  }
+
+  redirectToMiddlePage(gameResult) {
+    let result = gameResult;
+    let name;
+    let moves;
+    let time;
+
+    if (result === 'won/lost') {
+      if (this.playerTurn instanceof HumanPlayer) {
+        result = 'won';
+        name = this.playerTurn.name;
+        moves = this.playerTurn.movesMade;
+        time = this.playerTurn.timeOfMoves;
+      } else {
+        result = 'lost'
+      }
+    }
+    else {
+      result = 'draw'
+    }
+
+    //result, name, moves, time
+    this.gamePage.middlePage.push(new MiddlePage(result, name, moves, time));
+    this.gamePage.render();
+
+    this.gamePage.baseEl.find('.form').hide();
+    this.gamePage.baseEl.find('.game').hide();
+    this.gamePage.baseEl.find('.middle-page').show();
   }
 
 }
