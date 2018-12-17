@@ -54,11 +54,11 @@ class Game extends Component {
   }
 
   addBrickInSlot(column) {
-    if (this.checkIfColumnIsFull(column)) {
-      return false;
-    }
+    
 
-    column.bricksInsideMe++;
+   
+    
+    console.log('column.bricksInsideMe',column.bricksInsideMe)
     this.movesThisGame++;
 
     let slot = column.slots[column.slotIndex];
@@ -66,7 +66,10 @@ class Game extends Component {
     column.slotIndex--;
     this.playerTurn.moveCounter();
     slot.render();
-
+    column.bricksInsideMe++;
+    if (this.checkIfColumnIsFull(column)) {
+      return false;
+    }
     if (this.winChecker(this.playerTurn.color)) {
       this.gameOver = true;
       setTimeout(() => {
@@ -87,7 +90,11 @@ class Game extends Component {
   }
 
   checkIfColumnIsFull(column) {
-    return column.bricksInsideMe >= 6;
+    console.log('column.isFull',column.isFull);
+    if(column.isFull){
+      column.render();
+    }
+    return column.isFull;
   }
 
   winChecker(playerColor) {

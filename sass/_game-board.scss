@@ -50,9 +50,7 @@
       border-radius: 50%;
       box-shadow: inset 2px 2px 2px #000;
 
-       &:first-child .brick {
-        animation: pulse linear 0.5s 1 alternate;
-      } 
+      
 
       .brick {
         background-image: url(/img/spiral.png);
@@ -67,6 +65,12 @@
         border-radius: 50%;
         box-shadow: inset 2px 2px 2px #000;
       }
+    }
+    &.full-column {
+      .brick {
+        animation: pulse linear 0.5s 1.5 alternate;
+      } 
+
     }
   }
 }
