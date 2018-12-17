@@ -30,6 +30,12 @@ class Game extends Component {
       this.playerIsWaiting = true;
       this.botMakeMove();
     }
+    if(this.players[0] instanceof Bot && this.players[1] instanceof Bot){
+      while(this.players[0].name === this.players[1].name){
+        this.players[1].name = this.players[1].getRandomName();
+        console.log("rerolling");
+      }
+    }
   }
 
   checkWhosTurn() {
