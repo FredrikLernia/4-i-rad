@@ -4,7 +4,6 @@ class PageContent extends Component {
     super();
     this.startPage = new StartPage();
     this.gamePage = new GamePage();
-    this.middlePage = new MiddlePage();
     this.rulesPage = new RulesPage();
     this.highscorePage = new Highscore();
     this.missingPage = new MissingPage();

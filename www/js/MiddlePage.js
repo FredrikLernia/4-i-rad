@@ -2,7 +2,9 @@ class MiddlePage extends Component{
 
   constructor(){
     super();
-    this.addRoute('/resultat', 'Resultat');
+
+    // Those properties are just temporary for working with the layout
+    // The values shall later be equal to the result of the game
     this.result = 'won';
     this.name = 'Fredrik';
     this.moves = 14;
