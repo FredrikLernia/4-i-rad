@@ -3,7 +3,9 @@ class Game extends Component {
   constructor(players, gamePage) {
     super();
     this.addEvents({
-      'click .restart': 'restartGame'
+      'click .restart': 'restartGame',
+      'click .btn': 'newGame'
+
     });
     this.players = players;
     this.gamePage = gamePage;
@@ -12,6 +14,11 @@ class Game extends Component {
     this.clearPlayers();
     this.createColumns();
     this.startNewGame();
+  }
+
+  newGame(){
+    console.log("removing game");
+    this.gamePage = undefined;
   }
 
   clearPlayers(){
