@@ -6,7 +6,7 @@
     <div class="col-7">
       <div class="row">
         <div class="col">
-          ${this.result === 'won' ? `
+          ${this.renderMode === 'human won' ? `
           <h2>Grattis ${this.name}, du vann!</h2>
           <p>Antal drag: ${this.moves}</p>
           <p>Total tid: ${this.time}s</p>
@@ -14,10 +14,17 @@
           <p><strong>Ditt resultat har kommit med i topplistan! <a href="/topplista">Ta mig dit!</a></p></strong>
           ` : ``}
           ` : ``}
-          ${this.result === 'lost' ? `
+
+          ${this.renderMode === 'bot won' ? `
+            <h2>Boten ${this.name} vann!</h2>
+            <p>Antal drag: ${this.moves}</p>
+          ` : ``}
+
+          ${this.renderMode === 'human lost' ? `
           <h2>Tyvärr, du förlorade!</h2>
           ` : ``}
-          ${this.result === 'draw' ? `
+
+          ${this.renderMode === 'draw' ? `
           <h2>Det blev oavgjort!</h2>
           ` : ``}
         </div>

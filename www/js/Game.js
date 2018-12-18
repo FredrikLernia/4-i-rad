@@ -24,7 +24,7 @@ class Game extends Component {
     this.playerTurn = this.checkWhosTurn();
     this.gameOver = false;
     this.movesThisGame = 0;
-    this.start;
+    this.start = Date.now();
     this.playerIsWaiting = false;
     this.render();
     if (this.playerTurn instanceof Bot) {
@@ -170,26 +170,21 @@ class Game extends Component {
 
   redirectToMiddlePage(gameResult) {
     let result = gameResult;
-    let name;
-    let moves;
-    let time;
+    let name = this.playerTurn.name;
+    let moves = this.playerTurn.movesMade;
+    let time = this.playerTurn.timeOfMoves;
+    let playerOneIsHuman = this.players[0] instanceof HumanPlayer;
+    let playerTwoIsHuman = this.players[1] instanceof HumanPlayer;
 
-    if (result === 'won/lost') {
-      if (this.playerTurn instanceof HumanPlayer) {
-        result = 'won';
-        name = this.playerTurn.name;
-        moves = this.playerTurn.movesMade;
-        time = this.playerTurn.timeOfMoves;
-      } else {
-        result = 'lost'
-      }
+    let playerType;
+    if (this.playerTurn instanceof HumanPlayer) {
+      playerType = 'human';
     }
     else {
-      result = 'draw'
+      playerType = 'bot';
     }
 
-    //result, name, moves, time
-    this.gamePage.middlePage.push(new MiddlePage(result, name, moves, time));
+    this.gamePage.middlePage.push(new MiddlePage(result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType));
     this.gamePage.render();
 
     this.gamePage.baseEl.find('.form').hide();
