@@ -9,8 +9,16 @@ class Game extends Component {
     this.gamePage = gamePage;
     this.columns = [];
     this.start = Date.now();
+    this.clearPlayers();
     this.createColumns();
     this.startNewGame();
+  }
+
+  clearPlayers(){
+    if(this.players.length >= 4){
+      this.players.shift();
+      this.players.shift();
+    }
   }
 
   createColumns() {
