@@ -69,9 +69,9 @@ class Game extends Component {
 
     if (this.winChecker(this.playerTurn.color)) {
       this.gameOver = true;
-      // this.savedGame = JSON.stringify(this.columns);
+      // this.savedGame = JSON.stringify(this.columns); för att middlepage
       setTimeout(() => {
-        //this.restartGame();
+        this.restartGame();
         // Go to result page with either win or lose from here
       }, 2000)
     }
@@ -117,23 +117,23 @@ class Game extends Component {
 
           dia2Check = this.columns[col + i];
           dia2 = dia2 && dia2Check && this.columns[col + i].slots[row - i] !== undefined && this.columns[col + i].slots[row - i].brickInside[0] !== undefined && this.columns[col + i].slots[row - i].brickInside[0].color === playerColor;
-          dia2 && (dia2Arr.push(this.columns[col + i].slots[row - i]))
+          dia2 && (dia2Arr.push(this.columns[col + i].slots[row - i]));
         }
 
         if (hor || ver || dia1 || dia2) {
-          if(vertArr.length === 4){
+          if(vertArr.length === 4) {
             this.winSlots = vertArr;
           }
-          else if(horArr.length === 4){
+          else if(horArr.length === 4) {
             this.winSlots = horArr;
           }
-          else if(dia1Arr === 4){
+          else if(dia1Arr.length === 4) {
             this.winSlots = dia1Arr;
           }
-          else if(dia2Arr === 4) {
+          else if(dia2Arr.length === 4) {
             this.winSlots = dia2Arr;
           }
-          for(let slot of this.winSlots){
+          for(let slot of this.winSlots) {
             slot.win = true;
             slot.render();
           }
