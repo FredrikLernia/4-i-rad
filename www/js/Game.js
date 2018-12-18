@@ -23,11 +23,18 @@ class Game extends Component {
     this.playerTurn = this.checkWhosTurn();
     this.gameOver = false;
     this.movesThisGame = 0;
+    this.start;
     this.playerIsWaiting = false;
     this.render();
     if (this.playerTurn instanceof Bot) {
       this.playerIsWaiting = true;
       this.botMakeMove();
+    }
+    if(this.players[0] instanceof Bot && this.players[1] instanceof Bot){
+      while(this.players[0].name === this.players[1].name){
+        this.players[1].name = this.players[1].getRandomName();
+        console.log("rerolling");
+      }
     }
   }
 
@@ -65,6 +72,9 @@ class Game extends Component {
     slot.brickInside.push(new Brick(this.playerTurn.color));
     column.slotIndex--;
     this.playerTurn.moveCounter();
+    if(this.playerTurn instanceof HumanPlayer){
+    this.moveTimer();
+    }
     slot.render();
 
     if (this.winChecker(this.playerTurn.color)) {
@@ -160,6 +170,8 @@ class Game extends Component {
     else {
       this.playerIsWaiting = false;
     }
+    this.start = Date.now();
+    this.render();
   }
 
   restartGame() {
@@ -177,9 +189,9 @@ class Game extends Component {
   moveTimer() {
 
     this.delta = (Date.now() - this.start) / 1000;
-    this.totalTime += Math.round(this.delta * 1000) / 1000;
+    this.players[this.turnIndex].timeOfMoves += Math.round(this.delta * 1000) / 1000;
     console.log("time for this move: " + this.delta);
-    console.log("total time passed: " + this.totalTime);
+    console.log("total time passed: " + this.players[this.turnIndex].timeOfMoves);
     this.start = Date.now();
   }
 

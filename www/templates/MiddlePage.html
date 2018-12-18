@@ -1,3 +1,32 @@
-<div class="middle-page">
-  <p>Does fate exist? If so, do we have free will?</p>
+<div class="container">
+  <div class="row">
+    <div class="col-5">
+      <img src="/img/example_pic.png" class="img-fluid">
+    </div>
+    <div class="col-7">
+      <div class="row">
+        <div class="col">
+          ${this.result === 'won' ? `
+          <h2>Grattis ${this.name}, du vann!</h2>
+          <p>Antal drag: ${this.moves}</p>
+          <p>Total tid: ${this.time}s</p>
+          ${this.isHighscore ? `
+          <p><strong>Ditt resultat har kommit med i topplistan! <a href="/topplista">Ta mig dit!</a></p></strong>
+          ` : ``}
+          ` : ``}
+          ${this.result === 'lost' ? `
+          <h2>Tyvärr, du förlorade!</h2>
+          ` : ``}
+          ${this.result === 'draw' ? `
+          <h2>Det blev oavgjort!</h2>
+          ` : ``}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary">Spela igen</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
