@@ -7,10 +7,10 @@ class PageContent extends Component {
     this.rulesPage = new RulesPage();
     this.highscorePage = new HighscorePage();
     this.missingPage = new MissingPage();
-    this.loadLocalDB(); //Plug this puppy in when we are ready to do so (routing data to startpage for now)
+    //this.loadLocalDB(); //Plug this puppy in when we are ready to do so (routing data to startpage for now)
   }
 
-  async loadLocalDB(){
+  /* async loadLocalDB(){
      // optional, this is if we want to load data from a JSON file
     // JSON._classes(MusiciansAndBands, Musicians, Bands, Musician, Band);
     let response = await JSON._load('highscore.json');
@@ -20,7 +20,7 @@ class PageContent extends Component {
     response.data._id = this.highscorePage._id;
     this.highscorePage = response.data;
     this.highscorePage.render();
-  }
+  } */
 
   
 }
