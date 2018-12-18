@@ -87,14 +87,14 @@ class Game extends Component {
       // this.savedGame = JSON.stringify(this.columns); för att middlepage
       setTimeout(() => {
         this.redirectToMiddlePage('won/lost');
-      }, 1500)
+      }, 2500)
     }
 
     if (this.checkForDraw()) {
       this.gameOver = true;
       setTimeout(() => {
         this.redirectToMiddlePage('draw');
-      }, 1500)
+      }, 2500)
     }
 
     return true;
