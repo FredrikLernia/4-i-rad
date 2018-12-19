@@ -1,6 +1,6 @@
-class MiddlePage extends Component{
+class MiddlePage extends Component {
 
-  constructor(result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType){
+  constructor(result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType) {
     super();
     this.result = result;
     this.name = name;
@@ -9,26 +9,28 @@ class MiddlePage extends Component{
     this.playerOneIsHuman = playerOneIsHuman;
     this.playerTwoIsHuman = playerTwoIsHuman;
     this.playerType = playerType;
-    this.loadHighscore();
 
     this.getGameMode();
     this.writeResult();
+    this.loadHighscore();
   }
 
   loadHighscore() {
-    JSON._load('highscore.json').then((highscore) => {
-      let jsonHighscoreList = highscore['highscore-list'];
-      let highscoreList = [];
-      for (let item of jsonHighscoreList) {
-        highscoreList.push(item);
-      }
-      if (this.checkIfHighscore(highscoreList)) {
-        this.isHighscore = true;
-      }
-      else {
-        this.isHighscore = false;
-      }
-    });
+    if (this.renderMode === 'human won') {
+      JSON._load('highscore.json').then((highscore) => {
+        let jsonHighscoreList = highscore['highscore-list'];
+        let highscoreList = [];
+        for (let item of jsonHighscoreList) {
+          highscoreList.push(item);
+        }
+        if (this.checkIfHighscore(highscoreList)) {
+          this.isHighscore = true;
+        }
+        else {
+          this.isHighscore = false;
+        }
+      });
+    }
   }
 
   checkIfHighscore(highscoreList) {
@@ -37,7 +39,7 @@ class MiddlePage extends Component{
       moves: this.moves,
       time: this.time
     };
-    
+
     for (let [index, item] of highscoreList.entries()) {
       if (gameResult.moves <= item.moves) {
         if (gameResult.moves === item.moves && gameResult.time <= item.time) {
@@ -57,7 +59,7 @@ class MiddlePage extends Component{
   putIntoHighscore(highscoreList, index, gameResult) {
     highscoreList.splice(index, 0, gameResult);
     highscoreList.length = 10;
-    JSON._save('highscore.json', {'highscore-list': highscoreList});
+    JSON._save('highscore.json', { 'highscore-list': highscoreList });
     Store.highscore.loadHighscore();
   }
 
