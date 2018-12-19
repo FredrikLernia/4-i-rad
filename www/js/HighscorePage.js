@@ -3,15 +3,16 @@ class HighscorePage extends Component {
   constructor(){
     super();
     this.addRoute('/topplista', 'Topplista');
-    this.highscoreItems = [];
-    this.getHighscore();
+    this.loadHighscore();
+    Store.highscore = this;
   }
 
-  getHighscore() {
+  loadHighscore() {
     JSON._load('highscore.json').then((highscore) => {
-      let highscoreList = highscore['highscore-list'];
-      for (let item of highscoreList) {
-        this.highscoreItems.push(new HighscoreItem(item));
+      let jsonHighscoreList = highscore['highscore-list'];
+      this.highscoreItems = [];
+      for (let [index, item] of jsonHighscoreList.entries()) {
+        this.highscoreItems.push(new HighscoreItem(index, item));
       }
       this.render();
     });

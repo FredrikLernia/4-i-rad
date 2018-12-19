@@ -9,10 +9,56 @@ class MiddlePage extends Component{
     this.playerOneIsHuman = playerOneIsHuman;
     this.playerTwoIsHuman = playerTwoIsHuman;
     this.playerType = playerType;
-    this.isHighscore = true;
+    this.loadHighscore();
 
     this.getGameMode();
     this.writeResult();
+  }
+
+  loadHighscore() {
+    JSON._load('highscore.json').then((highscore) => {
+      let jsonHighscoreList = highscore['highscore-list'];
+      let highscoreList = [];
+      for (let item of jsonHighscoreList) {
+        highscoreList.push(item);
+      }
+      if (this.checkIfHighscore(highscoreList)) {
+        this.isHighscore = true;
+      }
+      else {
+        this.isHighscore = false;
+      }
+    });
+  }
+
+  checkIfHighscore(highscoreList) {
+    let gameResult = {
+      name: this.name,
+      moves: this.moves,
+      time: this.time
+    };
+    
+    for (let [index, item] of highscoreList.entries()) {
+      if (gameResult.moves <= item.moves) {
+        if (gameResult.moves === item.moves && gameResult.time <= item.time) {
+          this.putIntoHighscore(highscoreList, index, gameResult);
+          break;
+        }
+        else if (gameResult.moves < item.moves) {
+          this.putIntoHighscore(highscoreList, index, gameResult);
+          break;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  putIntoHighscore(highscoreList, index, gameResult) {
+    highscoreList.splice(index, 0, gameResult);
+    highscoreList.length = 10;
+    JSON._save('highscore.json', {'highscore-list': highscoreList});
+    Store.highscore.loadHighscore();
   }
 
   getGameMode() {

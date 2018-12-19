@@ -1,64 +1,54 @@
 {
   "highscore-list": [
     {
-      "rank": 1,
-      "name": "Fredrik",
-      "moves": 5,
+      "name": "Trump",
+      "moves": 4,
       "time": 2.29
     },
     {
-      "rank": 2,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 4,
+      "time": 3.29
     },
     {
-      "rank": 3,
-      "name": "Fredrik",
+      "name": "Trump",
       "moves": 5,
-      "time": 2.29
+      "time": 4.19
     },
     {
-      "rank": 4,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 6,
+      "time": 3.89
     },
     {
-      "rank": 5,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 7,
+      "time": 8.29
     },
     {
-      "rank": 6,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 7,
+      "time": 12.29
     },
     {
-      "rank": 7,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 8,
+      "time": 9.29
     },
     {
-      "rank": 8,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 12,
+      "time": 26.99
     },
     {
-      "rank": 9,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 15,
+      "time": 30.44
     },
     {
-      "rank": 10,
-      "name": "Fredrik",
-      "moves": 5,
-      "time": 2.29
+      "name": "Trump",
+      "moves": 15,
+      "time": 42.03
     }
   ]
 }
