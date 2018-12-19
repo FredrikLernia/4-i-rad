@@ -1,15 +1,31 @@
 class Game extends Component {
 
-  constructor(players) {
+  constructor(players, gamePage) {
     super();
     this.addEvents({
-      'click .restart': 'restartGame'
+      'click .restart': 'restartGame',
+      'click .btn': 'newGame'
+
     });
     this.players = players;
+    this.gamePage = gamePage;
     this.columns = [];
     this.start = Date.now();
+    this.clearPlayers();
     this.createColumns();
     this.startNewGame();
+  }
+
+  newGame(){
+    console.log("removing game");
+    this.gamePage = undefined;
+  }
+
+  clearPlayers(){
+    if(this.players.length >= 4){
+      this.players.shift();
+      this.players.shift();
+    }
   }
 
   createColumns() {
@@ -23,7 +39,7 @@ class Game extends Component {
     this.playerTurn = this.checkWhosTurn();
     this.gameOver = false;
     this.movesThisGame = 0;
-    this.start;
+    this.start = Date.now();
     this.playerIsWaiting = false;
     this.render();
     if (this.playerTurn instanceof Bot) {
@@ -49,14 +65,18 @@ class Game extends Component {
         while (!this.addBrickInSlot(this.columns[randomNumber])) {
           randomNumber = this.playerTurn.getRandomNumber();
         }
-        this.changePlayer();
+        if (!this.gameOver) {
+          this.changePlayer();
+        }
       }, 1000)
     }
   }
 
   humanMakeMove(clickedColumn) {
     if (!this.gameOver && !this.playerIsWaiting && this.addBrickInSlot(clickedColumn)) {
-      this.changePlayer();
+      if (!this.gameOver) {
+        this.changePlayer();
+      }
     }
   }
 
@@ -72,8 +92,8 @@ class Game extends Component {
     slot.brickInside.push(new Brick(this.playerTurn.color));
     column.slotIndex--;
     this.playerTurn.moveCounter();
-    if(this.playerTurn instanceof HumanPlayer){
-    this.moveTimer();
+    if (this.playerTurn instanceof HumanPlayer) {
+      this.moveTimer();
     }
     slot.render();
 
@@ -81,17 +101,15 @@ class Game extends Component {
       this.gameOver = true;
       // this.savedGame = JSON.stringify(this.columns); för att middlepage
       setTimeout(() => {
-        this.restartGame();
-        // Go to result page with either win or lose from here
-      }, 2000)
+        this.redirectToMiddlePage('won/lost');
+      }, 2500)
     }
 
     if (this.checkForDraw()) {
       this.gameOver = true;
       setTimeout(() => {
-        this.restartGame();
-        // Go to result page with draw from here
-      }, 2000)
+        this.redirectToMiddlePage('draw');
+      }, 2500)
     }
 
     return true;
@@ -193,6 +211,30 @@ class Game extends Component {
     console.log("time for this move: " + this.delta);
     console.log("total time passed: " + this.players[this.turnIndex].timeOfMoves);
     this.start = Date.now();
+  }
+
+  redirectToMiddlePage(gameResult) {
+    let result = gameResult;
+    let name = this.playerTurn.name;
+    let moves = this.playerTurn.movesMade;
+    let time = this.playerTurn.timeOfMoves;
+    let playerOneIsHuman = this.players[0] instanceof HumanPlayer;
+    let playerTwoIsHuman = this.players[1] instanceof HumanPlayer;
+
+    let playerType;
+    if (this.playerTurn instanceof HumanPlayer) {
+      playerType = 'human';
+    }
+    else {
+      playerType = 'bot';
+    }
+
+    this.gamePage.middlePage.push(new MiddlePage(result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType));
+    this.gamePage.render();
+
+    this.gamePage.baseEl.find('.form').hide();
+    this.gamePage.baseEl.find('.game').hide();
+    this.gamePage.baseEl.find('.middle-page').show();
   }
 
 }
