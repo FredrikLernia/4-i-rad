@@ -3,14 +3,29 @@ class Game extends Component {
   constructor(players, gamePage) {
     super();
     this.addEvents({
-      'click .restart': 'restartGame'
+      'click .restart': 'restartGame',
+      'click .btn': 'newGame'
+
     });
     this.players = players;
     this.gamePage = gamePage;
     this.columns = [];
     this.start = Date.now();
+    this.clearPlayers();
     this.createColumns();
     this.startNewGame();
+  }
+
+  newGame(){
+    console.log("removing game");
+    this.gamePage = undefined;
+  }
+
+  clearPlayers(){
+    if(this.players.length >= 4){
+      this.players.shift();
+      this.players.shift();
+    }
   }
 
   createColumns() {
@@ -84,7 +99,11 @@ class Game extends Component {
 
     if (this.winChecker(this.playerTurn.color)) {
       this.gameOver = true;
-      // this.savedGame = JSON.stringify(this.columns); för att middlepage
+      //baseEl startar från yttersta template div och letar sig
+      //fram till klasse .game som klonas med hjälp av 
+      //jQuery och sparas i en variabel gameBoard
+      //som senare används och avslutar hela reDirectToMiddlePage-metoden.
+      this.gameBoard = this.baseEl.find('.game').clone();
       setTimeout(() => {
         this.redirectToMiddlePage('won/lost');
       }, 2500)
@@ -218,8 +237,10 @@ class Game extends Component {
     this.gamePage.render();
 
     this.gamePage.baseEl.find('.form').hide();
-    this.gamePage.baseEl.find('.game').hide();
     this.gamePage.baseEl.find('.middle-page').show();
+    console.log('gameBoard', this.gameBoard);
+    $('.winning-board').append(this.gameBoard.prevObject.prevObject);
+
   }
 
 }
