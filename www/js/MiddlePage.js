@@ -25,9 +25,11 @@ class MiddlePage extends Component {
         }
         if (this.checkIfHighscore(highscoreList)) {
           this.isHighscore = true;
+          this.render();
         }
         else {
           this.isHighscore = false;
+          this.render();
         }
       });
     }
