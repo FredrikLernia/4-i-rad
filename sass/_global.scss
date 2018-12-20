@@ -2,7 +2,7 @@ body {
   background-image: url('/img/background-image.png');
 }
 
-body > div {
+body > .outer-div {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
