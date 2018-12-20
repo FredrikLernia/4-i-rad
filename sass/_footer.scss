@@ -1,5 +1,5 @@
 
-@media (max-width: 992px) { 
+/* @media (max-width: 992px) { 
   .footer-row1 .d-inline-block{
     width: 215.2px;
     text-align: left;
@@ -19,4 +19,21 @@
     width: 215.2px;
     text-align: left;
   }
+} */
+
+footer {
+  position: relative;
+  background-color: #fff;
+  
+  .footer-row {
+    padding: 20px 0;
+  }
+
+  .footer-info {
+    color: #000;
+  }
 }
+
+/* .footer-info {
+  margin-bottom: 0;
+} */
