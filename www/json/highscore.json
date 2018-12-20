@@ -1,0 +1,54 @@
+{
+  "highscore-list": [
+    {
+      "name": "Trump",
+      "moves": 4,
+      "time": 2.29
+    },
+    {
+      "name": "Trump",
+      "moves": 4,
+      "time": 3.29
+    },
+    {
+      "name": "Trump",
+      "moves": 5,
+      "time": 4.19
+    },
+    {
+      "name": "Trump",
+      "moves": 6,
+      "time": 3.89
+    },
+    {
+      "name": "Trump",
+      "moves": 7,
+      "time": 8.29
+    },
+    {
+      "name": "Trump",
+      "moves": 7,
+      "time": 12.29
+    },
+    {
+      "name": "Trump",
+      "moves": 8,
+      "time": 9.29
+    },
+    {
+      "name": "Trump",
+      "moves": 12,
+      "time": 26.99
+    },
+    {
+      "name": "Trump",
+      "moves": 15,
+      "time": 30.44
+    },
+    {
+      "name": "Trump",
+      "moves": 15,
+      "time": 42.03
+    }
+  ]
+}
