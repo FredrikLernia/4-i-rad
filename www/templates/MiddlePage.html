@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col">
           ${this.renderMode === 'human won' ? `
-          <h2>Grattis ${this.name}, du vann!</h2>
+          <h2 class="middleHeader">Grattis ${this.name}, du vann!</h2>
           <p>Antal drag: ${this.moves}</p>
           <p>Total tid: ${this.time}s</p>
           ${this.isHighscore ? `
@@ -16,22 +16,22 @@
           ` : ``}
 
           ${this.renderMode === 'bot won' ? `
-            <h2>Boten ${this.name} vann!</h2>
+            <h2 class="middleHeader">Boten ${this.name} vann!</h2>
             <p>Antal drag: ${this.moves}</p>
           ` : ``}
 
           ${this.renderMode === 'human lost' ? `
-          <h2>Tyvärr, du förlorade!</h2>
+          <h2 class="middleHeader">Tyvärr, du förlorade!</h2>
           ` : ``}
 
           ${this.renderMode === 'draw' ? `
-          <h2>Det blev oavgjort!</h2>
+          <h2 class="middleHeader">Det blev oavgjort!</h2>
           ` : ``}
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <button type="button" class="btn btn-primary">Spela igen</button>
+          <button type="button" class="btn btn-primary"><a href="/topplista">Spela igen</a></button>
         </div>
       </div>
     </div>
