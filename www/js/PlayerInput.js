@@ -13,7 +13,7 @@ class PlayerInput extends Component {
     this.chosenColor = ['🎨 Färg'];
     Store.chosenColors = [];
     this.colorTranslation = {
-      'Gul': 'yellow',
+      'Brun': 'yellow',
       'Röd': 'red',
       'Grön': 'green',
       'Lila': 'purple'
