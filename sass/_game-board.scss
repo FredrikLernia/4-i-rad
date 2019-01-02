@@ -2,10 +2,10 @@
 
   .game-board {
     padding: 0 2%;
-    padding-top: 5px;
-    background-color: blue;
+    padding-top: 2%;
+    background-color: rgb(0, 0, 240);
     border-radius: 2%;
-    box-shadow: 4px 4px 4px $box-shadow-color;
+    box-shadow: 4px 4px 4px $box-shadow-color, inset 4px 6px 12px rgb(123, 123, 255);
   
     .game-board-column {
       position: relative;
@@ -29,6 +29,8 @@
         transition: all .2s ease-out;
       }
       &:hover:before{
+        background-image: url(/img/navbar-logo.png);
+        width: 100%;
         bottom: 102%;
         opacity: 1;
       }
@@ -49,7 +51,7 @@
         padding-top: 100%;
         background-color: #e4ad00;
         border-radius: 50%;
-        box-shadow: inset 4px 4px 4px $box-shadow-color;
+        box-shadow: inset 4px 4px 4px rgb(0, 0, 0);
   
         /* &:first-child .brick {
           animation: pulse linear 0.5s 1 alternate;
@@ -97,7 +99,8 @@
 
     .game-buttons {
       position: absolute;
-      padding: 4%;
+      /* padding: 4%; */
+      padding: 10px;
       left: 0;
       top: 5%;
       border-top-right-radius: 7%;
@@ -105,8 +108,9 @@
       display: inline-block;
       background-color: rgb(0, 0, 211);
       color: #fff;
-      font-size: 2vw;
-      box-shadow: inset 2px 0 2px $box-shadow-color, 2px 2px 2px $box-shadow-color;
+      /* font-size: 2.3vw; */
+      font-size: 20px;
+      box-shadow: inset 2px 0 2px $box-shadow-color, inset 0 6px 6px rgb(159, 159, 255), 2px 2px 2px $box-shadow-color;
       cursor: pointer;
 
       .game-button:hover {
@@ -118,7 +122,7 @@
 }
 
 .yellow {
-  background-color: yellow;
+  background-color: rgb(54, 35, 0);
 }
 
 .red {
