@@ -1,29 +1,27 @@
 <div class="game-content">
   <div class="row">
-    <div class="col-3 pr-0 player-names-col"></div>
-    <div class="col-6 px-0">
+    <div class="col-0 col-lg-3 pr-0"></div>
+    <div class="col-10 col-lg-6 px-0 pl-3 pl-sm-0">
       <div class="game-board">
         ${this.columns}
         <div class="row">
           <div class="col-5">
-            <div class="player-one">${this.players[0].name} ${this.turnIndex === 0 ? `
-              <span class="color-box ${this.players[0].color}"></span>
-              ` : ``}
+            <div class="player-one">Trump
+              <span class="color-box red"></span>
             </div>
           </div>
           <div class="col-2">
             <p class="versus">VS.</p>
           </div>
           <div class="col-5">
-            <div class="player-two">${this.players[1].name} ${this.turnIndex === 1 ? `
-              <span class="color-box ${this.players[1].color}"></span>
-              ` : ``}
+            <div class="player-two">Putin
+              <span class="color-box yellow"></span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-3 pl-0 game-buttons-col">
+    <div class="col-2 col-lg-3 pl-0 game-buttons-col">
       <div class="game-buttons">
         <div class="row game-button">
           <div class="col"><i class="fas fa-redo"></i></div>
