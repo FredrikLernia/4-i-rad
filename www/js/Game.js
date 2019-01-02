@@ -218,6 +218,8 @@ class Game extends Component {
 
     this.delta = (Date.now() - this.start) / 1000;
     this.players[this.turnIndex].timeOfMoves += Math.round(this.delta * 1000) / 1000;
+    this.players[this.turnIndex].timeOfMoves = this.players[this.turnIndex].timeOfMoves.toFixed(2);
+    this.players[this.turnIndex].timeOfMoves = parseFloat(this.players[this.turnIndex].timeOfMoves);
     console.log("time for this move: " + this.delta);
     console.log("total time passed: " + this.players[this.turnIndex].timeOfMoves);
     this.start = Date.now();
