@@ -39,6 +39,12 @@ class Game extends Component {
     this.playerTurn = this.checkWhosTurn();
     this.gameOver = false;
     this.movesThisGame = 0;
+    if(this.players[0] instanceof HumanPlayer) {
+    this.players[0].timeOfMoves = 0;
+    }
+    if(this.players[1] instanceof HumanPlayer) {
+      this.players[1].timeOfMoves = 0;
+    }
     this.start = Date.now();
     this.playerIsWaiting = false;
     this.render();
