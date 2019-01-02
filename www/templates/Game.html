@@ -6,16 +6,18 @@
         ${this.columns}
         <div class="row">
           <div class="col-5">
-            <div class="player-one">Trump
-              <span class="color-box red"></span>
+            <div class="player-one">${this.players[0].name} ${this.turnIndex === 0 ? `
+              <span class="color-box ${this.players[0].color}"></span>
+              ` : ``}
             </div>
           </div>
           <div class="col-2">
             <p class="versus">VS.</p>
           </div>
           <div class="col-5">
-            <div class="player-two">Putin
-              <span class="color-box yellow"></span>
+            <div class="player-two">${this.players[1].name} ${this.turnIndex === 1 ? `
+              <span class="color-box ${this.players[1].color}"></span>
+              ` : ``}
             </div>
           </div>
         </div>
