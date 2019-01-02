@@ -1,38 +1,46 @@
 .player-form {
-  width: 80%;
-  margin: auto;
+  input[type="text"], .btn {
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid $input-border-color !important;
+  }
+  
+  .choose-player-type, .choose-color {
+    -webkit-appearance: none;
+  }
+  
+  .color-box {
+    display: inline-block;
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+    border: 1px solid black;
+    border-radius: 50%;
+  }
+  
+  .color-name {
+    vertical-align: baseline;
+  }
+
+  .player-name, .start-game, .choose-player-type, .choose-color {
+    background-color: rgba(228, 173, 0, 0.8);
+    &:focus {
+      background-color: rgba(228, 173, 0, 0.8);
+    }
+  }
+
+  .dropdown-menu {
+    background-color: rgb(228, 173, 0);
+    .dropdown-item:hover {
+      background-color: rgb(255, 224, 124);
+    }
+  }
 }
 
-input[type="text"], .btn, select {
-  outline: none;
-  box-shadow: none !important;
-  border: 1px solid $input-border-color !important;
-}
-
-.choose-player-type, .choose-color {
-  -webkit-appearance: none;
-}
-
-/* .choose-player-type {
-  border-radius: 0;
-} */
-
-/* .choose-color {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border: 1px solid $input-border-color;
-  color: $input-color;
-} */
-
-.color-box {
-  display: inline-block;
-  margin-right: 5px;
-  width: 15px;
-  height: 15px;
-  border: 1px solid black;
-  border-radius: 50%;
-}
-
-.color-name {
-  vertical-align: baseline;
+.form-header{
+  text-align: center;
+  padding: 20px;
+  font-family: "TangoBT";
+  font-size: 70px;
+  color: rgb(250, 232, 171);
 }

@@ -1,6 +1,6 @@
 <div id="player-${this.playerNr}">
   <p class="mb-1">Spelare ${this.playerNr}:</p>
-  <div class="row mb-3 player-one">
+  <div class="row mb-3">
     <div class="col-md-6">
       ${this.playerType[0] === '💻 Dator' ? `
       <input type="text" class="form-control player player-name" placeholder="Namn (2-10 tecken)" value="${this.playerName}" aria-label="Namn" disabled>
@@ -15,8 +15,8 @@
           ${this.playerType[0]}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item player-type" href="#">👨 Människa</a>
-          <a class="dropdown-item player-type" href="#">💻 Dator</a>
+          <a class="dropdown-item player-type py-2" href="#">👨 Människa</a>
+          <a class="dropdown-item player-type py-2" href="#">💻 Dator</a>
         </div>
       </div>
       <div class="dropdown input-group-append">
@@ -26,10 +26,10 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <!-- Important! If you want to add more classes to the <a>-tags below, do it after the existing ones -->
-          <a class="dropdown-item color-name select-yellow" href="#"><span class="color-box yellow"></span>Brun</a>
-          <a class="dropdown-item color-name select-red" href="#"><span class="color-box red"></span>Röd</a>
-          <a class="dropdown-item color-name select-green" href="#"><span class="color-box green"></span>Grön</a>
-          <a class="dropdown-item color-name select-purple" href="#"><span class="color-box purple"></span>Lila</a>
+          <a class="dropdown-item color-name select-yellow py-2" href="#"><span class="color-box yellow"></span>Brun</a>
+          <a class="dropdown-item color-name select-red py-2" href="#"><span class="color-box red"></span>Röd</a>
+          <a class="dropdown-item color-name select-green py-2" href="#"><span class="color-box green"></span>Grön</a>
+          <a class="dropdown-item color-name select-purple py-2" href="#"><span class="color-box purple"></span>Lila</a>
         </div>
       </div>
     </div>
