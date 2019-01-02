@@ -1,7 +1,11 @@
 class MiddlePage extends Component {
 
-  constructor(result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType) {
+  constructor(game, result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType, winningBoard) {
     super();
+    this.addEvents({
+      'click .play-again': 'playAgain'
+    });
+    this.game = game;
     this.result = result;
     this.name = name;
     this.moves = moves;
@@ -9,6 +13,7 @@ class MiddlePage extends Component {
     this.playerOneIsHuman = playerOneIsHuman;
     this.playerTwoIsHuman = playerTwoIsHuman;
     this.playerType = playerType;
+    this.winningBoard = winningBoard;
 
     this.getGameMode();
     this.writeResult();
@@ -46,16 +51,16 @@ class MiddlePage extends Component {
       if (gameResult.moves <= item.moves) {
         if (gameResult.moves === item.moves && gameResult.time <= item.time) {
           this.putIntoHighscore(highscoreList, index, gameResult);
-          break;
+          return true;
         }
         else if (gameResult.moves < item.moves) {
           this.putIntoHighscore(highscoreList, index, gameResult);
-          break;
+          return true;
         }
       }
     }
 
-    return true;
+    return false;
   }
 
   putIntoHighscore(highscoreList, index, gameResult) {
@@ -78,6 +83,8 @@ class MiddlePage extends Component {
   }
 
   writeResult() {
+    this.winningBoardHTML = this.winningBoard[0].innerHTML;
+
     if (this.result === 'won/lost' && this.playerType === 'human') {
       this.renderMode = 'human won';
     }
@@ -90,5 +97,11 @@ class MiddlePage extends Component {
     else {
       this.renderMode = 'draw';
     }
+  }
+
+  playAgain() {
+    this.game.resetGame();
+    this.baseEl.hide();
+    this.game.gamePage.baseEl.find('.game').show();
   }
 }
