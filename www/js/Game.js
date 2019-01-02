@@ -3,22 +3,15 @@ class Game extends Component {
   constructor(players, gamePage) {
     super();
     this.addEvents({
-      'click .restart': 'restartGame',
-      'click .cancel': 'newGame'
+      'click .restart': 'resetGame',
+      'click .cancel': 'cancelGame'
 
     });
     this.players = players;
     this.gamePage = gamePage;
     this.columns = [];
     this.start = Date.now();
-    this.clearPlayers();
-    this.createColumns();
-    this.startNewGame();
-  }
-
-  newGame(){
-    console.log("removing game");
-    this.gamePage = undefined;
+    this.resetGame();
   }
 
   clearPlayers(){
@@ -32,6 +25,27 @@ class Game extends Component {
     for (let i = 1; i <= 7; i++) {
       this.columns.push(new Column(i, this));
     }
+  }
+
+  resetGame() {
+    this.gamePage.middlePage = [];
+    this.columns = [];
+    this.createColumns();
+    for (let player of this.players) {
+      player.movesMade = 0;
+      if (player instanceof HumanPlayer) {
+        player.timeOfMoves = 0;
+      }
+    }
+    this.startNewGame();
+  }
+
+  cancelGame() {
+    this.gamePage.form = [];
+    this.gamePage.game = [];
+    this.gamePage.baseEl.find('.game').hide();
+    this.gamePage.createForm();
+    this.gamePage.render();
   }
 
   startNewGame() {
@@ -106,10 +120,10 @@ class Game extends Component {
     if (this.winChecker(this.playerTurn.color)) {
       this.gameOver = true;
       //baseEl startar från yttersta template div och letar sig
-      //fram till klasse .game som klonas med hjälp av 
+      //fram till klassen .game-clone som klonas med hjälp av 
       //jQuery och sparas i en variabel gameBoard
-      //som senare används och avslutar hela reDirectToMiddlePage-metoden.
-      this.gameBoard = this.baseEl.find('.game').clone();
+      //som senare skickas med till middle page.
+      this.gameBoard = this.baseEl.find('.game-clone').clone();
       setTimeout(() => {
         this.redirectToMiddlePage('won/lost');
       }, 2500)
@@ -117,6 +131,7 @@ class Game extends Component {
 
     if (this.checkForDraw()) {
       this.gameOver = true;
+      this.gameBoard = this.baseEl.find('.game-clone').clone();
       setTimeout(() => {
         this.redirectToMiddlePage('draw');
       }, 2500)
@@ -175,7 +190,6 @@ class Game extends Component {
             slot.win = true;
             slot.render();
           }
-          console.log(this.winSlots);
           return true;
         }
       }
@@ -202,26 +216,12 @@ class Game extends Component {
     this.render();
   }
 
-  restartGame() {
-    for (let column of this.columns) {
-      column.emptyColumn();
-    }
-
-    for (let player of this.players) {
-      player.resetMovesCounter();
-    }
-
-    this.startNewGame();
-  }
-
   moveTimer() {
 
     this.delta = (Date.now() - this.start) / 1000;
     this.players[this.turnIndex].timeOfMoves += Math.round(this.delta * 1000) / 1000;
     this.players[this.turnIndex].timeOfMoves = this.players[this.turnIndex].timeOfMoves.toFixed(2);
     this.players[this.turnIndex].timeOfMoves = parseFloat(this.players[this.turnIndex].timeOfMoves);
-    console.log("time for this move: " + this.delta);
-    console.log("total time passed: " + this.players[this.turnIndex].timeOfMoves);
     this.start = Date.now();
   }
 
@@ -241,14 +241,11 @@ class Game extends Component {
       playerType = 'bot';
     }
 
-    this.gamePage.middlePage.push(new MiddlePage(result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType));
+    this.gamePage.middlePage.push(new MiddlePage(this, result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType, this.gameBoard));
     this.gamePage.render();
 
     this.gamePage.baseEl.find('.form').hide();
     this.gamePage.baseEl.find('.middle-page').show();
-    console.log('gameBoard', this.gameBoard);
-    $('.winning-board').append(this.gameBoard.prevObject.prevObject);
-
   }
 
 }
