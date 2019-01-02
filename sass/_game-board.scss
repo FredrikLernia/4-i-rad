@@ -29,6 +29,8 @@
         transition: all .2s ease-out;
       }
       &:hover:before{
+        background-image: url(/img/navbar-logo.png);
+        width: 100%;
         bottom: 102%;
         opacity: 1;
       }
