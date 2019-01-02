@@ -4,7 +4,7 @@ class Game extends Component {
     super();
     this.addEvents({
       'click .restart': 'restartGame',
-      'click .btn': 'newGame'
+      'click .cancel': 'newGame'
 
     });
     this.players = players;
