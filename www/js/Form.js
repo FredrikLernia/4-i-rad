@@ -29,14 +29,14 @@ class Form extends Component {
   }
   
   validatePlayerNames(){
-    let currentPlayerType;
-    for (let i = 1; i <= 2; i++) {
-      currentPlayerType = this.baseEl.find('#player-' + i).find('.choose-player-type')[0].innerText;
-      if (currentPlayerType === '💻 Dator ') {
-        this.playerOne.name = 'computer';
-        this.playerTwo.name = 'computer';
-      } 
-    }  
+    let bot1 = this.baseEl.find('#player-1').find('.choose-player-type')[0].innerText;
+    let bot2 = this.baseEl.find('#player-2').find('.choose-player-type')[0].innerText;
+    if (bot1 === '💻 Dator '){
+      this.playerOne.name = 'bot1';
+    }
+    if (bot2 === '💻 Dator '){
+      this.playerTwo.name = 'bot2';
+    }
     if (this.playerOne.name.length < 2 || this.playerOne.name.length > 10){
       this.baseEl.find('#player-1-text').show();
     }
