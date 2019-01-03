@@ -31,6 +31,14 @@
   .choose-player-type, .choose-color {
     -webkit-appearance: none;
   }
+
+  .choose-player-type {
+    width: 140px;
+  }
+
+  .choose-color {
+    width: 100px;
+  }
   
   .color-box {
     display: inline-block;
