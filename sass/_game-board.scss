@@ -54,9 +54,9 @@
         border-radius: 50%;
         box-shadow: inset 4px 4px 4px rgb(0, 0, 0);
   
-        /* &:first-child .brick {
-          animation: pulse linear 0.5s 1 alternate;
-        } */
+        //  &:first-child .brick {
+        //   animation: pulse linear 0.5s 1 alternate;
+        // }
   
         .brick {
           position: absolute;
@@ -65,7 +65,17 @@
           bottom: 0;
           left: 0;
           border-radius: 50%;
-          box-shadow: inset 4px 4px 4px $box-shadow-color;
+          box-shadow: inset 2px 2px 2px $box-shadow-color;
+          .inner-brick{
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            bottom: 6px;
+            left: 6px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.7);
+          }
         }
       }
     }
