@@ -134,7 +134,7 @@ class Game extends Component {
       this.gameBoard = this.baseEl.find('.game-clone').clone();
       setTimeout(() => {
         this.redirectToMiddlePage('draw');
-      }, 2500)
+      }, 2000)
     }
 
     return true;
