@@ -1,3 +1,42 @@
-<div class="middle-page">
-  <p>Does fate exist? If so, do we have free will?</p>
+<div class="container middle-page-content">
+  <div class="row">
+    <div class="col-md-4 winning-board px-0">
+      ${this.winningBoardHTML}
+      <div class="ghost-board"></div>
+    </div>
+    <div class="col-md-8 px-0 pt-4 pt-md-0 pl-md-4">
+      <div class="card p-4">
+        <div class="row">
+          <div class="col">
+            ${this.renderMode === 'human won' ? `
+            <h2>Grattis ${this.name}, du vann!</h2>
+            <p>Antal drag: ${this.moves}</p>
+            <p>Total tid: ${this.time}s</p>
+            ${this.isHighscore ? `
+            <p><strong>Ditt resultat har kommit med i topplistan! <a href="/topplista">Ta mig dit!</a></p></strong>
+            ` : ``}
+            ` : ``}
+
+            ${this.renderMode === 'bot won' ? `
+            <h2>Boten ${this.name} vann!</h2>
+            <p>Antal drag: ${this.moves}</p>
+            ` : ``}
+
+            ${this.renderMode === 'human lost' ? `
+            <h2>Tyvärr, du förlorade!</h2>
+            ` : ``}
+
+            ${this.renderMode === 'draw' ? `
+            <h2>Det blev oavgjort!</h2>
+            ` : ``}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-primary play-again">Spela igen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
