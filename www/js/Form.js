@@ -29,14 +29,21 @@ class Form extends Component {
   }
   
   validatePlayerNames(){
-
-    if (this.playerOne.name.length < 2 || this.playerOne.name.length > 9){
+    let currentPlayerType;
+    for (let i = 1; i <= 2; i++) {
+      currentPlayerType = this.baseEl.find('#player-' + i).find('.choose-player-type')[0].innerText;
+      if (currentPlayerType === '💻 Dator ') {
+        this.playerOne.name = 'computer';
+        this.playerTwo.name = 'computer';
+      } 
+    }  
+    if (this.playerOne.name.length < 2 || this.playerOne.name.length > 10){
       this.baseEl.find('#player-1-text').show();
     }
     else {
       this.baseEl.find('#player-1-text').hide();
     }
-    if (this.playerTwo.name.length < 2 || this.playerTwo.name.length > 9){
+    if (this.playerTwo.name.length < 2 || this.playerTwo.name.length > 10){
       this.baseEl.find('#player-2-text').show();
     }
     else {

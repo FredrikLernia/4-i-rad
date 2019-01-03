@@ -1,35 +1,21 @@
 #player-1-text, #player-2-text{
   color: rgb(255, 0, 0);
-  margin-left: 1em;
+  margin-top: 4px;
+  margin-left: 0.5em;
   display: none;
 }
 
 #player-type {
   color: rgb(255, 0, 0);
-  margin-left: 1em;
+  margin-top: 4px;
+  margin-left: 0.5em;
   display: none;
 } 
 
 #player-color {
   color: rgb(255, 0, 0);
-  margin-left: 1em;
+  margin-top: 4px;
   display: none;
+  margin-left: 145px;
 }
 
-@media screen and (min-width: 1200px){
-  #player-type {
-    margin-left: -0.5px;
-  }
-}
-
-@media screen and (min-width: 1200px){
-  #player-color{
-    margin-left: -1em;
-  }
-}
-
-@media (min-width: 767px) and (max-width: 990px){
-  #player-color{
-    margin-left: 3em;
-  }
-}

@@ -12,6 +12,9 @@
         <input type="text" class="form-control player player-name" placeholder="Namn (2-10 tecken)" value="${this.playerName}"
           aria-label="Namn" autofocus>
         `}
+        <div>
+          <p id="player-${this.playerNr}-text">Vänligen fyll i ett namn (2-10 tecken)</p>
+        </div>
       </div>
       <div class="input-group">
         <div class="dropdown input-group-prepend">
@@ -23,7 +26,7 @@
             <a class="dropdown-item player-type py-2" href="#">👨 Människa</a>
             <a class="dropdown-item player-type py-2" href="#">💻 Dator</a>
           </div>
-        </div>
+        </div> 
         <div class="dropdown input-group-append">
           <button class="btn dropdown-toggle choose-color" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -38,19 +41,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <p id="player-${this.playerNr}-text">Vänligen fyll i ett namn (2-10 tecken)</p>
-    </div>
-    <div class="col-md-2">
       <p id="player-type">Välj spelartyp</p>
-    </div>
-    <div class="col-md-2">
       <p id="player-color">Välj färg</p>
-    </div>
-    <div class="col-md-2">
     </div>
   </div>
 </div>

@@ -89,10 +89,13 @@ class PlayerInput extends Component {
     if (this.playerNr === 1) {
       this.form.playerInputs[1].playerName = this.form.baseEl.find('#player-2').find('.player-name').val();
       this.form.playerInputs[1].render();
+      this.form.playerInputs[0].playerName = this.form.baseEl.find('#player-1').find('.player-name').val();
     }
     else {
       this.form.playerInputs[0].playerName = this.form.baseEl.find('#player-1').find('.player-name').val();
       this.form.playerInputs[0].render();
+      this.form.playerInputs[1].playerName = this.form.baseEl.find('#player-2').find('.player-name').val();
+
     }
     
     this.render();
