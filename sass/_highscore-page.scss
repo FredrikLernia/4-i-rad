@@ -31,3 +31,13 @@
     }
   }
 }
+
+.highlight-color {
+  animation: blinker 6s linear 1;
+  //background-color: green;
+}
+
+@keyframes blinker {
+  from { background-color: rgb(0, 255, 0); }
+  to { opacity: 1; }
+}
