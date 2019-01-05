@@ -6,13 +6,13 @@ class GamePage extends Component {
     this.pageContent = pageContent;
     this.players = [];
     this.middlePage = [];
-    //this.createForm();
-    this.form = new Form(this);
+    this.createForm();
+    //this.form = new Form(this);
   }
 
-  /* createForm() {
+  createForm() {
     this.form = new Form(this);
-  } */
+  }
 
   createGame() {
     this.game = new Game(this.players, this);
