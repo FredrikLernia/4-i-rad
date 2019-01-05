@@ -33,11 +33,12 @@
 }
 
 .highlight-color {
-  animation: blinker 6s linear 1;
-  //background-color: green;
+  animation: blinker 1.2s linear infinite;
 }
 
 @keyframes blinker {
-  from { background-color: rgb(0, 255, 0); }
-  to { opacity: 1; }
+  0% { opacity: 1; }
+  25% { background-color: rgb(0, 255, 0); }
+  35% { background-color: rgb(0, 255, 0); }
+  100% { opacity: 1; }
 }
