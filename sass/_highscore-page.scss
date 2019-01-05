@@ -56,3 +56,12 @@
   }
 }
      
+.highlight-color {
+  animation: blinker 1.2s linear infinite;
+}
+
+@keyframes blinker {
+  0% { opacity: 1; }
+  50% { background-color: rgb(0, 255, 0); }
+  100% { opacity: 1; }
+}

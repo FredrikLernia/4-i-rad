@@ -3,7 +3,8 @@ class MiddlePage extends Component {
   constructor(game, result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType, winningBoard) {
     super();
     this.addEvents({
-      'click .play-again': 'playAgain'
+      'click .play-again': 'playAgain',
+      'click .to-highscore': 'highlightHighscore'
     });
     this.game = game;
     this.result = result;
@@ -15,6 +16,7 @@ class MiddlePage extends Component {
     this.playerType = playerType;
     this.winningBoard = winningBoard;
 
+    this.game.clearCurrentPlayers();
     this.getGameMode();
     this.writeResult();
     this.loadHighscore();
@@ -68,6 +70,7 @@ class MiddlePage extends Component {
     highscoreList.length = 10;
     JSON._save('highscore.json', { 'highscore-list': highscoreList });
     Store.highscore.loadHighscore();
+    this.highscoreRank = index + 1;
   }
 
   getGameMode() {
@@ -103,5 +106,10 @@ class MiddlePage extends Component {
     this.game.resetGame();
     this.baseEl.hide();
     this.game.gamePage.baseEl.find('.game').show();
+  }
+
+  highlightHighscore() {
+    this.game.gamePage.game = [];
+    this.game.gamePage.pageContent.baseEl.find(`.rank-${this.highscoreRank}`).addClass('highlight-color');
   }
 }

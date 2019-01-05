@@ -14,12 +14,12 @@ class Game extends Component {
     this.resetGame();
   }
 
-  clearPlayers(){
-    if(this.players.length >= 4){
+  /* clearPlayers() {
+    if (this.players.length >= 4) {
       this.players.shift();
       this.players.shift();
     }
-  }
+  } */
 
   createColumns() {
     for (let i = 1; i <= 7; i++) {
@@ -41,7 +41,7 @@ class Game extends Component {
   }
 
   cancelGame() {
-    this.gamePage.players = [];
+    this.clearCurrentPlayers();
     this.gamePage.form = [];
     this.gamePage.game = [];
     this.gamePage.baseEl.find('.game').hide();
@@ -61,8 +61,8 @@ class Game extends Component {
       this.playerIsWaiting = true;
       this.botMakeMove();
     }
-    if(this.players[0] instanceof Bot && this.players[1] instanceof Bot){
-      while(this.players[0].name === this.players[1].name){
+    if (this.players[0] instanceof Bot && this.players[1] instanceof Bot) {
+      while (this.players[0].name === this.players[1].name) {
         this.players[1].name = this.players[1].getRandomName();
         console.log("rerolling");
       }
@@ -169,19 +169,19 @@ class Game extends Component {
         }
 
         if (hor || ver || dia1 || dia2) {
-          if(vertArr.length === 4) {
+          if (vertArr.length === 4) {
             this.winSlots = vertArr;
           }
-          else if(horArr.length === 4) {
+          else if (horArr.length === 4) {
             this.winSlots = horArr;
           }
-          else if(dia1Arr.length === 4) {
+          else if (dia1Arr.length === 4) {
             this.winSlots = dia1Arr;
           }
-          else if(dia2Arr.length === 4) {
+          else if (dia2Arr.length === 4) {
             this.winSlots = dia2Arr;
           }
-          for(let slot of this.winSlots) {
+          for (let slot of this.winSlots) {
             slot.win = true;
             slot.render();
           }
@@ -236,11 +236,23 @@ class Game extends Component {
       playerType = 'bot';
     }
 
+    this.clearCurrentPlayers();
+
     this.gamePage.middlePage.push(new MiddlePage(this, result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType, this.gameBoard));
     this.gamePage.render();
 
     this.gamePage.baseEl.find('.form').hide();
     this.gamePage.baseEl.find('.middle-page').show();
+  }
+
+  clearCurrentPlayers() {
+    this.gamePage.players = [];
+    Store.chosenColors = [];
+    for (let player of this.gamePage.form.playerInputs) {
+      player.playerName = '';
+      player.playerType = ['👨‍💻 Spelartyp'];
+      player.chosenColor = ['🎨 Färg'];
+    }
   }
 
 }
