@@ -58,6 +58,7 @@ class Game extends Component {
   }
 
   cancelGame() {
+    this.gameOver = true;
     this.clearCurrentPlayers();
     this.gamePage.form = [];
     this.gamePage.game = [];
