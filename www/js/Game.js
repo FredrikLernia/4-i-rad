@@ -113,21 +113,25 @@ class Game extends Component {
   }
 
   addBrickInSlot(column) {
+    console.log('column.bricksInsideMe', column.bricksInsideMe)
+    this.movesThisGame++;
     if (this.checkIfColumnIsFull(column)) {
       return false;
     }
 
-    column.bricksInsideMe++;
-    this.movesThisGame++;
+    
+    
 
     let slot = column.slots[column.slotIndex];
     slot.brickInside.push(new Brick(this.playerTurn.color));
     column.slotIndex--;
     this.playerTurn.moveCounter();
+    column.bricksInsideMe++;
+    slot.render();
     if (this.playerTurn instanceof HumanPlayer) {
       this.moveTimer();
     }
-    slot.render();
+    
 
     if (this.winChecker(this.playerTurn.color)) {
       this.gameOver = true;
@@ -153,7 +157,11 @@ class Game extends Component {
   }
 
   checkIfColumnIsFull(column) {
-    return column.bricksInsideMe >= 6;
+    console.log('column.isFull', column.isFull);
+    if (column.isFull) {
+    column.render();
+    }
+    return column.isFull;
   }
 
   winChecker(playerColor) {
