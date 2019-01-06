@@ -12,9 +12,20 @@ class Form extends Component {
     ];
     this.playerOne = {};
     this.playerTwo = {};
-  } 
+  }
+
+  clearForm() {
+    //this.gamePage.players = [];
+    Store.chosenColors = [];
+    for (let player of this.playerInputs) {
+      player.playerName = '';
+      player.playerType = ['👨‍💻 Spelartyp'];
+      player.chosenColor = ['🎨 Färg'];
+    }
+  }
 
   storeNames() {
+    this.gamePage.players = [];
     // Saving the name inputs to the player objects
     this.playerOne.name = this.baseEl.find('#player-1').find('.player-name').val();
     this.playerTwo.name = this.baseEl.find('#player-2').find('.player-name').val();
@@ -26,6 +37,8 @@ class Form extends Component {
     
       this.gamePage.createGame();
     }
+
+    this.clearForm();
   }
   
   validatePlayerNames(){

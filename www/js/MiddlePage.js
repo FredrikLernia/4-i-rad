@@ -16,7 +16,7 @@ class MiddlePage extends Component {
     this.playerType = playerType;
     this.winningBoard = winningBoard;
 
-    this.game.clearCurrentPlayers();
+    //this.game.clearCurrentPlayers();
     this.getGameMode();
     this.writeResult();
     this.loadHighscore();

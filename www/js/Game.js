@@ -3,7 +3,7 @@ class Game extends Component {
   constructor(players, gamePage) {
     super();
     this.addEvents({
-      'click .restart': 'resetGame',
+      'click .restart': 'restartGame',
       'click .cancel': 'cancelGame'
 
     });
@@ -21,6 +21,11 @@ class Game extends Component {
     }
   } */
 
+  restartGame() {
+    this.gameOver = true;
+    this.gamePage.createGame();
+  }
+
   createColumns() {
     for (let i = 1; i <= 7; i++) {
       this.columns.push(new Column(i, this));
@@ -30,13 +35,25 @@ class Game extends Component {
   resetGame() {
     this.gamePage.middlePage = [];
     this.columns = [];
-    this.createColumns();
     for (let player of this.players) {
       player.movesMade = 0;
       if (player instanceof HumanPlayer) {
         player.timeOfMoves = 0;
       }
     }
+    /* this.playerOne = this.players[0];
+    this.playerTwo = this.players[1];
+    this.players = [];
+    this.players.push(this.playerOne);
+    this.players.push(this.playerTwo); */
+    this.createColumns();
+    /* for (let player of this.players) {
+      player.movesMade = 0;
+      if (player instanceof HumanPlayer) {
+        player.timeOfMoves = 0;
+      }
+    } */
+
     this.startNewGame();
   }
 
@@ -236,7 +253,7 @@ class Game extends Component {
       playerType = 'bot';
     }
 
-    this.clearCurrentPlayers();
+    //this.clearCurrentPlayers();
 
     this.gamePage.middlePage.push(new MiddlePage(this, result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType, this.gameBoard));
     this.gamePage.render();

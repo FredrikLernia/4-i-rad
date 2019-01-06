@@ -19,6 +19,7 @@ class GamePage extends Component {
     this.render();
     this.baseEl.find('.form').hide();
     this.baseEl.find('.game').show();
+    //this.players = [];
   }
 
 }
