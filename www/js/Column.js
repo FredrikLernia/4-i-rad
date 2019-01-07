@@ -1,17 +1,21 @@
 class Column extends Component {
 
-  constructor(columnId, gamePage) {
+  constructor(columnId, game) {
     super();
     this.addEvents({
       'click .hidden-div-for-click': 'clickOnMe'
     });
     this.columnId = columnId;
-    this.gamePage = gamePage;
+    this.game = game;
     this.slots = [];
     this.createSlots();
     this.bricksInsideMe = 0;
     this.slotIndex = 5;
   }
+  /* get isFull() {
+    return this.bricksInsideMe >= 6;
+
+  } */
 
   createSlots() {
     for (let i = 6; i >=1; i--) {
@@ -20,8 +24,14 @@ class Column extends Component {
   }
 
   clickOnMe() {
-    this.gamePage.addBrickInSlot(this);
-       // this.gamePage.players[1].makeRandomizedMove(this.gamePage);
+    this.game.humanMakeMove(this);
+  }
+
+  emptyColumn() {
+    this.slots = [];
+    this.createSlots();
+    this.bricksInsideMe = 0;
+    this.slotIndex = 5;
   }
 
 }

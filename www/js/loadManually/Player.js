@@ -6,14 +6,8 @@ class Player {
     this.isYourTurn = false;
   }
 
-  isItYourTurn(isYourTurn){
-
-
-  }
-
   moveCounter(){
     this.movesMade++;
-    return this.movesMade;
   }
 
   resetMovesCounter(){

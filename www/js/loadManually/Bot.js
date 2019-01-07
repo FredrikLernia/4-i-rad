@@ -2,17 +2,17 @@ class Bot extends Player{
 
   constructor(color){
     super(color);
-    this.name = 'Bot';
+    this.namesArray = ['Klas', 'Hans', 'Olof', 'David', 'Per', 'Herman'];
+    this.name = this.getRandomName();
   }
 
-  makeRandomizedMove(){
-
-    let rand = Math.floor((Math.random() * 7));
-    return rand--;
+  getRandomNumber() {
+    let rand = Math.floor(Math.random() * 7);
+    return rand;
   }
 
-  makeCalculatedMove(){
-
-    
+  getRandomName(){
+    let rand = Math.round(Math.random() * (this.namesArray.length-1));
+    return this.namesArray[rand];
   }
 }

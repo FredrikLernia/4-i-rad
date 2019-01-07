@@ -13,7 +13,7 @@ class PlayerInput extends Component {
     this.chosenColor = ['🎨 Färg'];
     Store.chosenColors = [];
     this.colorTranslation = {
-      'Gul': 'yellow',
+      'Brun': 'yellow',
       'Röd': 'red',
       'Grön': 'green',
       'Lila': 'purple'
@@ -86,11 +86,19 @@ class PlayerInput extends Component {
 
     // This is for not having to rewrite your name every time
     // you change color
-    this.playerName = this.baseEl.find('.player-name').val();
+    if (this.playerNr === 1) {
+      this.form.playerInputs[1].playerName = this.form.baseEl.find('#player-2').find('.player-name').val();
+      this.form.playerInputs[1].render();
+      this.form.playerInputs[0].playerName = this.form.baseEl.find('#player-1').find('.player-name').val();
+    }
+    else {
+      this.form.playerInputs[0].playerName = this.form.baseEl.find('#player-1').find('.player-name').val();
+      this.form.playerInputs[0].render();
+      this.form.playerInputs[1].playerName = this.form.baseEl.find('#player-2').find('.player-name').val();
 
+    }
+    
     this.render();
-
-    this.form.render();
 
     // Hide all classes that are in Store
     for (let colorToHide of Store.chosenColors) {

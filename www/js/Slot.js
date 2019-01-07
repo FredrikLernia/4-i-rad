@@ -5,6 +5,7 @@ class Slot extends Component {
     this.columnId = columnId;
     this.slotId = slotId;
     this.brickInside = [];
+    this.win = false;
   }
 
 }

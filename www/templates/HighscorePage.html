@@ -1,0 +1,28 @@
+<div class="container high-score">
+  <div class="row">
+    <h1 class="col-12 highscore-header mb-4">Topplistan</h1>
+  </div>
+  
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10">
+      <div class="card">
+        <div class="card-body">
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" class="left-pos">Namn</th>
+                <th scope="col" class="center-pos">Antal drag</th>
+                <th scope="col" class="left-pos">Tid</th>
+              </tr>
+            </thead>
+            <tbody class="highscore-list">
+              ${this.highscoreItems}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,211 +1,286 @@
 class Game extends Component {
 
-  constructor(players) {
+  constructor(players, gamePage) {
     super();
     this.addEvents({
-      'click .restart': 'startNewGame'
+      'click .restart': 'restartGame',
+      'click .cancel': 'cancelGame'
+
     });
     this.players = players;
-    this.delta = 0;
-    this.totalTime = 0;
+    this.gamePage = gamePage;
+    this.columns = [];
     this.start = Date.now();
-    this.startNewGame();
+    this.resetGame();
   }
 
-  startNewGame() {
-    this.isWaiting = false;
-    this.turn = 0;
-    this.columns = [];
-    this.createColumns();
-    this.players[0].resetMovesCounter();
-    this.players[1].resetMovesCounter();
-    this.render();
-    //this.startTimer();
+  /* clearPlayers() {
+    if (this.players.length >= 4) {
+      this.players.shift();
+      this.players.shift();
+    }
+  } */
+
+  restartGame() {
+    this.gameOver = true;
+    this.gamePage.createGame();
   }
-  
+
   createColumns() {
     for (let i = 1; i <= 7; i++) {
       this.columns.push(new Column(i, this));
     }
   }
 
-  addBrickInSlot(column) {
-    let playerTurn = this.checkWhosTurn();
-
-    if(this.players[1] instanceof Bot && this.isWaiting === true){
-    return;
+  resetGame() {
+    this.gamePage.middlePage = [];
+    this.columns = [];
+    for (let player of this.players) {
+      player.movesMade = 0;
+      if (player instanceof HumanPlayer) {
+        player.timeOfMoves = 0;
+      }
     }
-    else{
-    this.playerMove(playerTurn, column);
+    /* this.playerOne = this.players[0];
+    this.playerTwo = this.players[1];
+    this.players = [];
+    this.players.push(this.playerOne);
+    this.players.push(this.playerTwo); */
+    this.createColumns();
+    /* for (let player of this.players) {
+      player.movesMade = 0;
+      if (player instanceof HumanPlayer) {
+        player.timeOfMoves = 0;
+      }
+    } */
 
-    this.changePlayer();
-    this.moveTimer();
-    column.slotIndex--;
-    this.isWaiting = true;
+    this.startNewGame();
+  }
+
+  cancelGame() {
+    //this.movesThisGame = 0;
+    this.gameOver = true;
+    this.clearCurrentPlayers();
+    this.gamePage.form = [];
+    this.gamePage.game = [];
+    this.gamePage.baseEl.find('.game').hide();
+    this.gamePage.createForm();
+    this.gamePage.render();
+  }
+
+  startNewGame() {
+    this.turnIndex = 0;
+    this.playerTurn = this.checkWhosTurn();
+    this.gameOver = false;
+    this.movesThisGame = 0;
+    this.start = Date.now();
+    this.playerIsWaiting = false;
+    this.render();
+    if (this.playerTurn instanceof Bot) {
+      this.playerIsWaiting = true;
+      this.botMakeMove();
     }
-
-    playerTurn = this.checkWhosTurn();
-    if(this.players[this.turn] instanceof Bot){
-    setTimeout(() => {
-      this.botMove(playerTurn);
-      this.isWaiting = false;
-    }, 1000);
-  }
-  }
-
-  playerMove(playerTurn, column) {
-
-    if (!this.checkIfColumnIsFull(column)) {
-      column.bricksInsideMe++;
-      let slot = column.slots[column.slotIndex];
-      slot.brickInside.push(new Brick(playerTurn.color));
-      playerTurn.moveCounter();
-      this.render();
-      if (this.newWinChecker(playerTurn.color)) {
-        this.players[0].resetMovesCounter();
-        this.players[1].resetMovesCounter();
-        this.render();
-        return;
+    if (this.players[0] instanceof Bot && this.players[1] instanceof Bot) {
+      while (this.players[0].name === this.players[1].name) {
+        this.players[1].name = this.players[1].getRandomName();
       }
     }
   }
 
-  botMove(playerTurn) {
+  checkWhosTurn() {
+    return this.players[this.turnIndex];
+  }
 
-    this.makeRandomMove(playerTurn);
-    if (this.newWinChecker(playerTurn.color)) {
-      return;
+  botMakeMove() {
+    if (!this.gameOver) {
+      setTimeout(() => {
+        let randomNumber = this.playerTurn.getRandomNumber();
+        while (!this.addBrickInSlot(this.columns[randomNumber])) {
+          randomNumber = this.playerTurn.getRandomNumber();
+        }
+        if (!this.gameOver) {
+          this.changePlayer();
+        }
+      }, 1000)
     }
-    this.checkForDraw();
-    this.render();
-    if (this.newWinChecker(playerTurn.color)) {
-      this.players[0].resetMovesCounter();
-      this.players[1].resetMovesCounter();
-      this.render();
-      return;
+  }
+
+  humanMakeMove(clickedColumn) {
+    if (!this.gameOver && !this.playerIsWaiting && this.addBrickInSlot(clickedColumn)) {
+      if (!this.gameOver) {
+        this.changePlayer();
+      }
     }
   }
 
-  moveTimer() {
+  addBrickInSlot(column) {
+    if (this.checkIfColumnIsFull(column)) {
+      return false;
+    }
 
-    this.delta = (Date.now() - this.start) / 1000;
-    this.totalTime += Math.round(this.delta * 1000) / 1000;
-    console.log("time for this move: " + this.delta);
-    console.log("total time passed: " + this.totalTime);
-    this.start = Date.now();
+    this.movesThisGame++;
+
+    let slot = column.slots[column.slotIndex];
+    slot.brickInside.push(new Brick(this.playerTurn.color));
+    column.slotIndex--;
+    this.playerTurn.moveCounter();
+    column.bricksInsideMe++;
+    slot.render();
+    if (this.playerTurn instanceof HumanPlayer) {
+      this.moveTimer();
+    }
+    
+
+    if (this.winChecker(this.playerTurn.color)) {
+      this.gameOver = true;
+      //baseEl startar från yttersta template div och letar sig
+      //fram till klassen .game-clone som klonas med hjälp av 
+      //jQuery och sparas i en variabel gameBoard
+      //som senare skickas med till middle page.
+      this.gameBoard = this.baseEl.find('.game-clone').clone();
+      setTimeout(() => {
+        this.redirectToMiddlePage('won/lost');
+      }, 2500)
+    }
+
+    if (this.checkForDraw()) {
+      this.gameOver = true;
+      this.gameBoard = this.baseEl.find('.game-clone').clone();
+      setTimeout(() => {
+        this.redirectToMiddlePage('draw');
+      }, 2000)
+    }
+
+    return true;
   }
 
-  startTimer() {
-    let start = Date.now();
-    setInterval(function () {
-      this.delta = Date.now() - start; // milliseconds elapsed since start
-      this.delta = Math.floor(this.delta / 1000); // in seconds
-      // alternatively just show wall clock time:
-    }, 1000);
+  checkIfColumnIsFull(column) {
+    /* console.log('column.isFull', column.isFull);
+    if (column.isFull) {
+      column.render();
+      return true;
+    }
+    return column.isFull; */
+    if (column.bricksInsideMe >= 6) {
+      return true;
+    }
+    return false;
   }
 
-  delay(ms) {
-    ms += new Date().getTime();
-    while (new Date() < ms) { }
-  }
-
-  async test() {
-
-    await sleep(1000);
-  }
-
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  newWinChecker(playerColor) {
+  winChecker(playerColor) {
 
     for (let col = 0; col < 7; col++) {
       for (let row = 0; row < 6; row++) {
         let hor = true, ver = true, dia1 = true, dia2 = true;
         let horCheck = false, verCheck = false, dia1Check = false, dia2Check = false;
-
+        let vertArr = [];
+        let horArr = [];
+        let dia1Arr = [];
+        let dia2Arr = [];
         for (let i = 0; i < 4; i++) {
 
           horCheck = this.columns[col + i];
           hor = hor && horCheck && this.columns[col + i].slots[row].brickInside[0] !== undefined && this.columns[col + i].slots[row].brickInside[0].color === playerColor;
+          hor && (horArr.push(this.columns[col + i].slots[row]));
 
           verCheck = this.columns[col].slots[row + i];
           ver = ver && verCheck && this.columns[col].slots[row + i].brickInside[0] !== undefined && this.columns[col].slots[row + i].brickInside[0].color === playerColor;
+          ver && (vertArr.push(this.columns[col].slots[row + i]));
 
           dia1Check = this.columns[col + i];
           dia1 = dia1 && dia1Check && this.columns[col + i].slots[row + i] !== undefined && this.columns[col + i].slots[row + i].brickInside[0] !== undefined && this.columns[col + i].slots[row + i].brickInside[0].color === playerColor;
+          dia1 && (dia1Arr.push(this.columns[col + i].slots[row + i]));
 
           dia2Check = this.columns[col + i];
           dia2 = dia2 && dia2Check && this.columns[col + i].slots[row - i] !== undefined && this.columns[col + i].slots[row - i].brickInside[0] !== undefined && this.columns[col + i].slots[row - i].brickInside[0].color === playerColor;
-
+          dia2 && (dia2Arr.push(this.columns[col + i].slots[row - i]));
         }
+
         if (hor || ver || dia1 || dia2) {
-          alert(playerColor + " wins");
-          this.startNewGame();
+          if (vertArr.length === 4) {
+            this.winSlots = vertArr;
+          }
+          else if (horArr.length === 4) {
+            this.winSlots = horArr;
+          }
+          else if (dia1Arr.length === 4) {
+            this.winSlots = dia1Arr;
+          }
+          else if (dia2Arr.length === 4) {
+            this.winSlots = dia2Arr;
+          }
+          for (let slot of this.winSlots) {
+            slot.win = true;
+            slot.render();
+          }
           return true;
         }
       }
     }
   }
 
-  makeRandomMove(playerTurn) {
-    let randCol;
-    let validMoveChecker = false;
-    while (validMoveChecker === false) {
-      randCol = this.players[1].makeRandomizedMove();
-      if (!this.botCheckIfColumnIsFull(this.columns[randCol])) {
-        validMoveChecker = true;
-      }
-    }
-
-    this.columns[randCol].bricksInsideMe++;
-    let slot = this.columns[randCol].slots[this.columns[randCol].slotIndex];
-    slot.brickInside.push(new Brick(playerTurn.color));
-    this.changePlayer();
-    this.render();
-    this.columns[randCol].slotIndex--;
-    validMoveChecker = false;
-  }
-
   checkForDraw() {
-    let drawCounter = 0;
-
-    for (let row = 0; row <= 5; row++) {
-      for (let col = 0; col <= 6; col++) {
-        if (this.columns[col].slots[row].brickInside[0] !== undefined ) {
-          drawCounter++;
-        }
-      }
-      if (drawCounter === 42) {
-        alert('draw')
-        this.startNewGame();
-        this.players[0].resetMovesCounter();
-        this.players[1].resetMovesCounter();
-        return true;
-      }
-    }
-  }
-
-  checkIfColumnIsFull(column) {
-    if (column.bricksInsideMe < 6) { return false; }
-    alert('This column is full')
-  }
-
-  botCheckIfColumnIsFull(column) {
-    if (column.bricksInsideMe < 6) { return false; }
-    return true;
-  }
-
-  checkWhosTurn() {
-
-    return this.players[this.turn];
+    return this.movesThisGame === 42;
   }
 
   changePlayer() {
-    if (this.turn === 0) { this.turn++; }
-    else { this.turn--; }
+    if (this.turnIndex === 0) { this.turnIndex++; }
+    else { this.turnIndex--; }
+
+    this.playerTurn = this.checkWhosTurn();
+    if (this.playerTurn instanceof Bot) {
+      this.playerIsWaiting = true;
+      this.botMakeMove();
+    }
+    else {
+      this.playerIsWaiting = false;
+    }
+    this.start = Date.now();
     this.render();
+  }
+
+  moveTimer() {
+
+    this.delta = (Date.now() - this.start) / 1000;
+    this.players[this.turnIndex].timeOfMoves += Math.round(this.delta * 1000) / 1000;
+    this.players[this.turnIndex].timeOfMoves = this.players[this.turnIndex].timeOfMoves.toFixed(2);
+    this.players[this.turnIndex].timeOfMoves = parseFloat(this.players[this.turnIndex].timeOfMoves);
+    this.start = Date.now();
+  }
+
+  redirectToMiddlePage(gameResult) {
+    let result = gameResult;
+    let name = this.playerTurn.name;
+    let moves = this.playerTurn.movesMade;
+    let time = this.playerTurn.timeOfMoves;
+    let playerOneIsHuman = this.players[0] instanceof HumanPlayer;
+    let playerTwoIsHuman = this.players[1] instanceof HumanPlayer;
+
+    let playerType;
+    if (this.playerTurn instanceof HumanPlayer) {
+      playerType = 'human';
+    }
+    else {
+      playerType = 'bot';
+    }
+
+    //this.clearCurrentPlayers();
+
+    this.gamePage.middlePage.push(new MiddlePage(this, result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType, this.gameBoard));
+    this.gamePage.render();
+
+    this.gamePage.baseEl.find('.form').hide();
+    this.gamePage.baseEl.find('.middle-page').show();
+  }
+
+  clearCurrentPlayers() {
+    this.gamePage.players = [];
+    Store.chosenColors = [];
+    for (let player of this.gamePage.form.playerInputs) {
+      player.playerName = '';
+      player.playerType = ['👨‍💻 Spelartyp'];
+      player.chosenColor = ['🎨 Färg'];
+    }
   }
 
 }
