@@ -12,10 +12,10 @@ class Column extends Component {
     this.bricksInsideMe = 0;
     this.slotIndex = 5;
   }
-  get isFull() {
+  /* get isFull() {
     return this.bricksInsideMe >= 6;
 
-  }
+  } */
 
   createSlots() {
     for (let i = 6; i >=1; i--) {
