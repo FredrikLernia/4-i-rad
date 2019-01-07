@@ -58,6 +58,7 @@ class Game extends Component {
   }
 
   cancelGame() {
+    //this.movesThisGame = 0;
     this.gameOver = true;
     this.clearCurrentPlayers();
     this.gamePage.form = [];
@@ -114,14 +115,12 @@ class Game extends Component {
   }
 
   addBrickInSlot(column) {
-    console.log('column.bricksInsideMe', column.bricksInsideMe)
-    this.movesThisGame++;
+    //console.log('column.bricksInsideMe', column.bricksInsideMe)
     if (this.checkIfColumnIsFull(column)) {
       return false;
     }
 
-    
-    
+    this.movesThisGame++;
 
     let slot = column.slots[column.slotIndex];
     slot.brickInside.push(new Brick(this.playerTurn.color));
@@ -158,11 +157,16 @@ class Game extends Component {
   }
 
   checkIfColumnIsFull(column) {
-    console.log('column.isFull', column.isFull);
+    /* console.log('column.isFull', column.isFull);
     if (column.isFull) {
-    column.render();
+      column.render();
+      return true;
     }
-    return column.isFull;
+    return column.isFull; */
+    if (column.bricksInsideMe >= 6) {
+      return true;
+    }
+    return false;
   }
 
   winChecker(playerColor) {
