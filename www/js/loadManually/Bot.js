@@ -12,9 +12,7 @@ class Bot extends Player{
   }
 
   getRandomName(){
-    console.log("arraylist ", this.namesArray.length-1)
     let rand = Math.round(Math.random() * (this.namesArray.length-1));
-    console.log(rand);
     return this.namesArray[rand];
   }
 }
