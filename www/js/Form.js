@@ -36,9 +36,8 @@ class Form extends Component {
       this.createPlayer(this.playerTwo);
     
       this.gamePage.createGame();
+      this.clearForm();
     }
-
-    this.clearForm();
   }
   
   validatePlayerNames(){
