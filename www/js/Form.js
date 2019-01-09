@@ -36,9 +36,8 @@ class Form extends Component {
       this.createPlayer(this.playerTwo);
     
       this.gamePage.createGame();
+      this.clearForm();
     }
-
-    this.clearForm();
   }
   
   validatePlayerNames(){
@@ -96,15 +95,6 @@ class Form extends Component {
     return false;
   }
 
-  /* createPlayer(player) {
-    if (player.type === '💻 Dator') {
-      this.gamePage.game[0].players.push(new Bot(player.color));
-    }
-    else {
-      this.gamePage.game[0].players.push(new HumanPlayer(player.name, player.color))
-    }
-  } */
-
   createPlayer(player) {
     if (player.type === '💻 Dator') {
       this.gamePage.players.push(new Bot(player.color));
@@ -113,7 +103,5 @@ class Form extends Component {
       this.gamePage.players.push(new HumanPlayer(player.name, player.color))
     }
   }
-
-  
 
 }

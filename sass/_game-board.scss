@@ -54,10 +54,6 @@
         border-radius: 50%;
         box-shadow: inset 4px 4px 4px rgb(0, 0, 0);
   
-        //  &:first-child .brick {
-        //   animation: pulse linear 0.5s 1 alternate;
-        // }
-  
         .brick {
           position: absolute;
           top: 0;
@@ -95,13 +91,7 @@
       border-radius: 50%;
     }
   }
-  
-  /* @keyframes pulse {
-    0%{border-radius: 10px;}
-    //50%{border-radius: 20px; }
-    100%{border-radius:60px;
-      transform:rotate(360deg) }
-  } */
+
   .winning-four{
     position: absolute;
     border-radius: 50%;
@@ -125,7 +115,6 @@
 
     .game-buttons {
       position: absolute;
-      /* padding: 4%; */
       padding: 10px;
       left: 0;
       top: 5%;
@@ -134,7 +123,6 @@
       display: inline-block;
       background-color: rgb(0, 0, 211);
       color: #fff;
-      /* font-size: 2.3vw; */
       font-size: 20px;
       box-shadow: inset 2px 0 2px $box-shadow-color, inset 0 6px 6px rgb(159, 159, 255), 2px 2px 2px $box-shadow-color;
       cursor: pointer;
