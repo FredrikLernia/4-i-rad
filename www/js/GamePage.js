@@ -7,7 +7,6 @@ class GamePage extends Component {
     this.players = [];
     this.middlePage = [];
     this.createForm();
-    //this.form = new Form(this);
   }
 
   createForm() {
@@ -19,7 +18,6 @@ class GamePage extends Component {
     this.render();
     this.baseEl.find('.form').hide();
     this.baseEl.find('.game').show();
-    //this.players = [];
   }
 
 }

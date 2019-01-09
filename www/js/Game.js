@@ -14,13 +14,6 @@ class Game extends Component {
     this.resetGame();
   }
 
-  /* clearPlayers() {
-    if (this.players.length >= 4) {
-      this.players.shift();
-      this.players.shift();
-    }
-  } */
-
   restartGame() {
     this.gameOver = true;
     this.gamePage.createGame();
@@ -41,24 +34,11 @@ class Game extends Component {
         player.timeOfMoves = 0;
       }
     }
-    /* this.playerOne = this.players[0];
-    this.playerTwo = this.players[1];
-    this.players = [];
-    this.players.push(this.playerOne);
-    this.players.push(this.playerTwo); */
     this.createColumns();
-    /* for (let player of this.players) {
-      player.movesMade = 0;
-      if (player instanceof HumanPlayer) {
-        player.timeOfMoves = 0;
-      }
-    } */
-
     this.startNewGame();
   }
 
   cancelGame() {
-    //this.movesThisGame = 0;
     this.gameOver = true;
     this.clearCurrentPlayers();
     this.gamePage.form = [];
@@ -155,12 +135,6 @@ class Game extends Component {
   }
 
   checkIfColumnIsFull(column) {
-    /* console.log('column.isFull', column.isFull);
-    if (column.isFull) {
-      column.render();
-      return true;
-    }
-    return column.isFull; */
     if (column.bricksInsideMe >= 6) {
       return true;
     }
@@ -263,8 +237,6 @@ class Game extends Component {
     else {
       playerType = 'bot';
     }
-
-    //this.clearCurrentPlayers();
 
     this.gamePage.middlePage.push(new MiddlePage(this, result, name, moves, time, playerOneIsHuman, playerTwoIsHuman, playerType, this.gameBoard));
     this.gamePage.render();
